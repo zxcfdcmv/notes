@@ -186,9 +186,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "82a0b036880972b5",
+  "active": "3e1105737d1401dc",
   "lastOpenFiles": [
     "README.md",
+    "运维/Deployment.md",
     "运维/HPA.md",
     "运维"
   ]
