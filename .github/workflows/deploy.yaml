@@ -18,28 +18,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. 拉取当前的“纯笔记仓库”（放到 notes 文件夹）
+      # 1. 拉取纯笔记仓库（保持所有 Git 历史以确保日期准确）
       - name: Checkout Notes
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           path: notes
 
-      # 2. 拉取 Quartz 官方 v5 的代码本体（放到 quartz 文件夹）
+      # 2. 拉取 Quartz v5 框架
       - name: Checkout Quartz v5 Framework
         uses: actions/checkout@v4
         with:
           repository: jackyzha0/quartz
-          ref: v5 # 确保拉取的是 v5 分支
+          ref: v5
           path: quartz
 
-      # 3. 【核心组装步骤】将笔记和配置文件装配到 Quartz 中
+      # 3. 组装内容与配置文件
       - name: Prepare Content and Config
         run: |
-          # 3a. 清空 Quartz 自带的默认示例内容
+          # 清空默认内容
           rm -rf quartz/content/*
           
-          # 3b. 将笔记复制到 quartz 的 content 目录（利用 rsync 排除 git 相关元数据）
+          # 复制笔记，过滤掉不需要编译的仓库文件
           rsync -av \
             --exclude='.git' \
             --exclude='.github' \
@@ -48,15 +48,15 @@ jobs:
             --exclude='quartz.config.yaml' \
             notes/ quartz/content/
           
-          # 3c. 将保存在笔记仓库根目录的 quartz.config.yaml 移动覆盖到 Quartz 根目录
+          # 覆盖配置文件
           if [ -f notes/quartz.config.yaml ]; then
             cp notes/quartz.config.yaml quartz/
           else
-            echo "Error: quartz.config.yaml not found in your notes repository root!"
+            echo "Error: quartz.config.yaml not found!"
             exit 1
           fi
 
-      # 4. 设置 Node 环境（进入 quartz 目录运行）
+      # 4. 设置 Node 环境
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -64,25 +64,31 @@ jobs:
           cache: 'npm'
           cache-dependency-path: quartz/package-lock.json
 
-      # 5. 安装依赖（注意：现在所有命令都要先 cd quartz）
+      # 5. 安装核心依赖
       - name: Install dependencies
         run: |
           cd quartz
           npm ci --legacy-peer-deps
 
-      # 6. Quartz v5 关键步骤：根据你的 yaml 安装插件
+      # 6. 提前显式安装默认主题包，防止 build 过程中动态加载死锁
+      - name: Pre-install Default Theme
+        run: |
+          cd quartz
+          npm install @quartz-themes/default --no-save
+
+      # 7. 根据 YAML 配置安装其他社区插件
       - name: Install Quartz plugins
         run: |
           cd quartz
           npx quartz plugin install --from-config
 
-      # 7. 编译生成静态网页
+      # 8. 执行编译
       - name: Build Quartz
         run: |
           cd quartz
           npx quartz build
 
-      # 8. 上传构建产物（注意：路径需要指向 quartz/public）
+      # 9. 上传产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -95,6 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      # 部署到 Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
