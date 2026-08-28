@@ -30,16 +30,28 @@ configuration:
         tertiary: "#84a59d"
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#fff23688"
+      # darkMode:
+      #   light: "#161618"
+      #   lightgray: "#393639"
+      #   gray: "#646464"
+      #   darkgray: "#d4d4d4"
+      #   dark: "#ebebec"
+      #   secondary: "#7b97aa"
+      #   tertiary: "#84a59d"
+      #   highlight: rgba(143, 159, 169, 0.15)
+      #   textHighlight: "#b3aa0288"
+
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        # 以下为 Gruvbox Dark 配色方案
+        light: "#282828"          # 背景色 (bg0)
+        lightgray: "#3c3836"      # 稍浅的背景 (bg1)
+        gray: "#665c54"           # 中灰色 (bg2)
+        darkgray: "#a89984"       # 前景灰 (fg4)
+        dark: "#ebdbb2"           # 前景色 (fg)
+        secondary: "#83a598"      # 蓝色 (blue)
+        tertiary: "#d3869b"       # 粉色 (pink)
+        highlight: rgba(168, 153, 132, 0.15) # 高亮背景
+        textHighlight: "#fabd2f88"          # 文字高亮 (黄色)
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
