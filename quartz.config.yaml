@@ -1,21 +1,17 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: zxcfdcmv's Notes
+  pageTitle: Quartz 5
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
   analytics:
     provider: plausible
-  locale: zh-CN
-  baseUrl: zxcfdcmv.github.io
+  locale: en-US
+  baseUrl: zxcfdcmv.github.io/notes
   ignorePatterns:
     - private
     - templates
     - .obsidian
-    - .git
-    - .github
-    - node_modules
-    - package*.json
   theme:
     fontOrigin: googleFonts
     cdnCaching: true
@@ -65,7 +61,17 @@ plugins:
   - source: "@quartz-community/obsidian-flavored-markdown"
     enabled: true
     options:
+      comments: true
+      highlight: true
+      wikilinks: true
+      callouts: true
+      mermaid: true
+      parseTags: true
+      parseArrows: true
+      parseBlockReferences: true
       enableInHtmlEmbed: false
+      enableYouTubeEmbed: true
+      enableVideoEmbed: true
       enableCheckbox: true
     order: 30
   - source: "@quartz-community/github-flavored-markdown"
@@ -94,7 +100,7 @@ plugins:
     enabled: false
     order: 85
   - source: "@quartz-community/hard-line-breaks"
-    enabled: false
+    enabled: true
     order: 90
   - source: "@quartz-community/ox-hugo"
     enabled: false
@@ -105,14 +111,31 @@ plugins:
   - source: "@quartz-community/quartz-fonts"
     enabled: true
   - source: "@quartz-themes/core"
-    enabled: false
+    enabled: true
     options:
-      theme: tokyo-night
+      theme: default
       mode: both
   - source: "@quartz-community/remove-draft"
     enabled: true
   - source: "@quartz-community/explicit-publish"
     enabled: false
+  - source: "@quartz-community/unlisted-pages"
+    enabled: true
+    options: {}
+    order: 45
+  - source: "@quartz-community/encrypted-pages"
+    enabled: true
+    options:
+      iterations: 600000
+      passwordField: password
+      unlistWhenEncrypted: false
+      outputPath: static/encryptedContentIndex.json
+  - source: "@quartz-community/stacked-pages"
+    enabled: false
+    layout:
+      position: afterBody
+      priority: 50
+      display: all
   - source: "@quartz-community/alias-redirects"
     enabled: true
   - source: "@quartz-community/content-index"
@@ -243,24 +266,13 @@ plugins:
       position: beforeBody
       priority: 15
       display: all
-  - source: "@quartz-community/unlisted-pages"
-    enabled: true
-    options: {}
-    order: 45
-  - source: "@quartz-community/encrypted-pages"
+  - source: "@quartz-community/obsidian-plugin-excalidraw"
     enabled: true
     options:
-      iterations: 600000
-      passwordField: password
-      unlistWhenEncrypted: false
-      outputPath: static/encryptedContentIndex.json
-    order: 900
-  - source: "@quartz-community/stacked-pages"
-    enabled: false
-    layout:
-      position: afterBody
-      priority: 50
-      display: all
+      enableInteraction: true
+      darkMode: auto
+      exportPadding: 20
+    order: 50
 layout:
   groups:
     toolbar:

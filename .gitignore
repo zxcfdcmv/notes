@@ -2,4 +2,14 @@ content/.obsidian/
 content/.trash
 node_modules/
 public/
-.quartz-cache/
+.quartz/
+.DS_Store
+*.log
+prof
+tsconfig.tsbuildinfo
+.quartz-cache
+private/
+.replit
+replit.nix
+quartz/cli/tui/dist/
+.turbo/
