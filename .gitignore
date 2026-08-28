@@ -1,2 +1,5 @@
-.obsidian
-.trash
+content/.obsidian/
+content/.trash
+node_modules/
+public/
+.quartz-cache/

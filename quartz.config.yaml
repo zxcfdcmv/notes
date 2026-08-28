@@ -1,17 +1,21 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: zxcfdcmv's Notes
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
   analytics:
     provider: plausible
-  locale: en-US
-  baseUrl: quartz.jzhao.xyz
+  locale: zh-CN
+  baseUrl: zxcfdcmv.github.io
   ignorePatterns:
     - private
     - templates
     - .obsidian
+    - .git
+    - .github
+    - node_modules
+    - package*.json
   theme:
     fontOrigin: googleFonts
     cdnCaching: true
