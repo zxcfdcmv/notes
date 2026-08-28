@@ -1,15 +1,2 @@
-content/.obsidian/
-content/.trash
-node_modules/
-public/
-.quartz/
-.DS_Store
-*.log
-prof
-tsconfig.tsbuildinfo
-.quartz-cache
-private/
-.replit
-replit.nix
-quartz/cli/tui/dist/
-.turbo/
+.obsidian/
+.trash
