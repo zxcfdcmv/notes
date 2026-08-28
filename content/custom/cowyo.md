@@ -1,6 +1,6 @@
 # cowyo 剪切板同步
 > `termux` + `cowyo` = 跨设备剪切板同步
-
+> **注意**: **用户名要一致**
 ## PC端脚本(nixos)
 ```nix
 (writeShellScriptBin "cowyo-up" ''
