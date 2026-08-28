@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整历史，用于 git 时间戳
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -32,7 +32,7 @@ jobs:
 
       # Quartz v5 关键步骤：安装插件
       - name: Install Quartz plugins
-        run: npx quartz plugin install
+        run: npx quartz plugin install --from-config
 
       - name: Build Quartz
         run: npx quartz build
