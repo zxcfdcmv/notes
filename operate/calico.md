@@ -23,8 +23,8 @@
 |场景/模式|Flannel|Calico|性能差异核心原因|
 |---|---|---|---|
 |**纯路由模式 (同节点/同二层网络)**|`host-gw` 模式性能接近物理网络|`BGP` 模式性能同样接近物理网络|**两者基本持平，性能最佳，无封装开销。** Calico的BGP在大规模集群中动态路由管理更优|
-|**隧道模式 (跨子网/通用场景)**|`VXLAN` 模式，有封装开销，带宽损耗约15-20%|`IPIP` 或 `VXLAN` 模式，同样有封装开销|**Calico通常略优于Flannel。** Calico的IPIP协议头更小，性能损耗略低[](https://developer.aliyun.com/article/766345)。实测Calico延迟(1.6ms)优于Flannel(2.8ms)[](https://portal.aiori.in/solution-report-blog-l8ncy/#content)。|
-|**混合/高级模式**|不支持同网段路由、跨网段隧道的智能切换。|**CrossSubnet模式**：同网段走BGP路由，跨网段自动切隧道，兼顾性能与灵活性[](https://www.ctyun.cn/developer/article/822316456050757#1)[](https://www.ctyun.cn/developer/article/822316456050757#2)。**eBPF模式**：可进一步降低延迟，提升转发性能[](https://www.ctyun.cn/developer/article/822316456050757#1)。|**Calico凭借CrossSubnet和eBPF模式，在复杂场景下优势更明显。**|
+|**隧道模式 (跨子网/通用场景)**|`VXLAN` 模式，有封装开销，带宽损耗约15-20%|`IPIP` 或 `VXLAN` 模式，同样有封装开销|**Calico通常略优于Flannel。** Calico的IPIP协议头更小，性能损耗略低实测Calico延迟(1.6ms)优于Flannel(2.8ms)|
+|**混合/高级模式**|不支持同网段路由、跨网段隧道的智能切换。|**CrossSubnet模式**：同网段走BGP路由，跨网段自动切隧道，兼顾性能与灵活性。**eBPF模式**：可进一步降低延迟，提升转发性能|**Calico凭借CrossSubnet和eBPF模式，在复杂场景下优势更明显。**|
 
 # 模式
 |模式名称|核心机制|适用网络环境|性能|运维复杂度|
