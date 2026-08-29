@@ -74,7 +74,7 @@ jobs:
       - name: Pre-install Default Theme
         run: |
           cd quartz
-          npm install @quartz-themes/default --no-save
+          npm install @quartz-themes/absolutegruv --no-save
 
       # 7. 根据 YAML 配置安装其他社区插件
       - name: Install Quartz plugins
