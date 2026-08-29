@@ -1,3 +1,17 @@
+```mermaid
+flowchart TD
+    A[Calico<br>整体：网络与安全解决方案] --> B[核心组件]
+    A --> C[数据面引擎]
+    A --> D[CNI Plugin<br>（Kubernetes 专属接口）]
+    
+    B --> B1[Felix]
+    B --> B2[BIRD]
+    B --> B3[Typha]
+    
+    C --> C1[iptables]
+    C --> C2[eBPF]
+    C --> C3[Windows HNS]
+```
 # 核心思想
 **为每个容器分配一个可路由的IP地址，构建一个扁平(不封装数据包)的三层网络**, 让Pod之间直接通过IP路由通信，无需NAT，无需隧道，像物理服务器一样
 
