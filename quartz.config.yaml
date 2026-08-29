@@ -61,17 +61,17 @@ plugins:
   - source: "@quartz-community/obsidian-flavored-markdown"
     enabled: true
     options:
-      comments: true
-      highlight: true
-      wikilinks: true
-      callouts: true
-      mermaid: true
-      parseTags: true
-      parseArrows: true
-      parseBlockReferences: true
+      # comments: true
+      # highlight: true
+      # wikilinks: true
+      # callouts: true
+      # mermaid: true
+      # parseTags: true
+      # parseArrows: true
+      # parseBlockReferences: true
       enableInHtmlEmbed: false
-      enableYouTubeEmbed: true
-      enableVideoEmbed: true
+      # enableYouTubeEmbed: true
+      # enableVideoEmbed: true
       enableCheckbox: true
     order: 20
   - source: "@quartz-community/github-flavored-markdown"
