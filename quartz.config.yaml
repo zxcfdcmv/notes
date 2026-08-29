@@ -54,8 +54,8 @@ plugins:
     enabled: true
     options:
       theme:
-        light: gruvbox-light
-        dark: gruvbox-dark
+        light: gruvbox-light-hard
+        dark: gruvbox-dark-hard
       keepBackground: false
     order: 30
   - source: "@quartz-community/obsidian-flavored-markdown"
