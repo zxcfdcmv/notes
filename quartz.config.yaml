@@ -54,8 +54,8 @@ plugins:
     enabled: true
     options:
       theme:
-        light: gruvbox-light-hard
-        dark: gruvbox-dark-hard
+        light: github-light
+        dark: github-dark
       keepBackground: false
     order: 30
   - source: "@quartz-community/obsidian-flavored-markdown"
@@ -111,9 +111,9 @@ plugins:
   - source: "@quartz-community/quartz-fonts"
     enabled: true
   - source: "@quartz-themes/core"
-    enabled: true
+    enabled: false
     options:
-      theme: absolutegruv
+      theme: default
       mode: both
   - source: "@quartz-community/remove-draft"
     enabled: true
