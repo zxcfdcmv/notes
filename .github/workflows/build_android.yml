@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 检出你的项目
+      # 1. 检出项目
       - name: Checkout project
         uses: actions/checkout@v4
         with:
@@ -38,10 +38,9 @@ jobs:
       # 3. 核心步骤：使用 jq 深度修改 "android" 块内部的嵌套字段
       - name: Process and Inject Custom Config
         run: |
-          # 先把你原汁原味的 200 多行配置文件复制过去
           cp -r notes/ppconfig.json pakeplus-android/scripts/ppconfig.json
           
-          # 定义变量获取你在 GitHub 网页输入的参数
+          # 定义变量获取在 GitHub 网页输入的参数
           INPUT_NAME="${{ github.event.inputs.app_name }}"
           INPUT_URL="${{ github.event.inputs.app_url }}"
           INPUT_ID="${{ github.event.inputs.app_id }}"          
@@ -97,9 +96,9 @@ jobs:
           chmod +x ./gradlew
           ./gradlew :app:assembleRelease  # 最新结构通常通过指定模块来编译
 
-      # 7. 将编译好的 APK 导出为可以下载的文件 (Artifacts)
+      # 7. 上传编译好的 APK
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: PakePlus-Android-App
-          path: pakeplus-android/android/app/build/outputs/apk/release/*.apk
+          name: ${{ github.event.inputs.app_name || 'PakePlus-App' }}-Android-APK
+          path: pakeplus-android/app/build/outputs/apk/release/*.apk
