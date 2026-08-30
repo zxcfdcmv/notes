@@ -77,11 +77,11 @@ jobs:
 
       # 5. 安装依赖并让 Pake 预解析配置
       - name: Install & Run Worker
+        env:
+          pnpm_config_only_built_dependencies: '["sharp"]'
         run: |
           npm install -g pnpm
           cd pakeplus-android
-          
-          pnpm config set allow-builds sharp
           pnpm install
           pnpm run pp:worker
 
