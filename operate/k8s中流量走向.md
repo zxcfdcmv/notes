@@ -63,4 +63,27 @@
 # 南北向流量
 > 集群外部接入的纵向通信
 
-## NodePort模式
+## NodePort模式(四层)
+- **路径**：`外部客户端` -> `任意 Node IP:NodePort` -> `kube-proxy (DNAT 转换)` -> `Pod`。
+- **详细过程**：
+    1. K8s 在集群的所有节点（Node）上开放一个相同的端口（如 32000）。
+    2. 用户请求访问 `http://<任意Node_IP>:32000`。
+    3. 节点收到流量后，内核中的 `kube-proxy` 规则立刻介入，通过 DNAT 将目标 IP 和端口转换为具体的 **Backend Pod IP**。
+    4. 如果选中的 Pod 在其他节点，该节点还会额外做一次 **SNAT（源地址转换）**，把源 IP 改为当前节点 IP，以确保响应数据包能原路返回。最后将流量跨节点转发给 Pod。
+
+## LoadBalancer模式(四层)
+- **路径**：`外部客户端` -> `云厂商公网 LB (如 AWS ELB/阿里云 SLB)` -> `多个 Node 的 NodePort` -> `kube-proxy` -> `Pod`。
+- **详细过程**：
+    1. 用户访问公网 IP 或域名，流量首先到达云厂商提供的**负载均衡器（LB）**。
+    2. 云厂商的 LB 充当了流量第一站，它把流量分发到 K8s 集群的各个工作节点（Node）的 NodePort 端口上。
+    3. 节点收到流量后，再次通过内部的 `kube-proxy` 路由到最终的 Pod。
+
+## Ingress / Gateway API 模式(七层)
+- **路径**：`外部客户端` -> `域名解析` -> `负载均衡器 (LB)` -> **Ingress Controller (如 Nginx Ingress)** -> `Pod`。
+- **详细过程**：
+    1. 用户在浏览器输入域名 `://example.com`。
+    2. 流量通过公网 LB，直接打到集群内部部署的 **Ingress Controller**（本质上是一个高性能的 Nginx/Envoy Pod，它通过 HostNetwork 或 LoadBalancer 暴露在最外端）。
+    3. Ingress Controller 收到 HTTP 请求后，读取其配置的路由规则（**Ingress 资源对象**）：
+        - 发现 `://example.com` 应该对应 `order-service`。
+    4. **关键点**：Ingress Controller 并**不会**把流量发给 Service VIP 让 `kube-proxy` 再转一次，而是通过 K8s API 直接监听该 Service 背后对应的 **Endpoints/EndpointSlice（即直接获取所有后端 Pod 的真实 IP 列表）**。
+    5. Ingress Controller 在应用层自己做负载均衡，**直接将 HTTP 请求转发给选中的后端 Pod IP**，绕过了四层虚拟转发，效率极高。
