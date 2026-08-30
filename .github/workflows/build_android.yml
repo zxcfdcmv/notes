@@ -70,18 +70,20 @@ jobs:
           node-version: 24
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'zulu'
 
-      # 5. 安装依赖并解析配置
+      # 5. 安装依赖并让 Pake 预解析配置
       - name: Install & Run Worker
         run: |
           npm install -g pnpm
           cd pakeplus-android
+          
+          pnpm config set allow-builds sharp
           pnpm install
-          pnpm run pp:worker # 这步会将你的 json 配置应用到原生安卓环境中
+          pnpm run pp:worker
 
       # 6. 执行 Gradle 编译命令生成 APK
       - name: Build with Gradle
