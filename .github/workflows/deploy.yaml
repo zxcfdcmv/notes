@@ -46,6 +46,7 @@ jobs:
             --exclude='README.md' \
             --exclude='.gitignore' \
             --exclude='quartz.config.yaml' \
+            --exclude='ppconfig.json' \
             notes/ quartz/content/
           
           # 覆盖配置文件

@@ -1,0 +1,98 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_name:
+        description: '应用名称'
+        required: true
+        default: 'notes'
+      app_url:
+        description: '网页的完整网址'
+        required: true
+        default: 'https://zxcfdcmv.github.io/notes'
+      app_id:
+        description: '安卓唯一步骤包名'
+        required: true
+        default: 'com.zxcfdcmv.notes.android'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出你的项目
+      - name: Checkout project
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          path: notes
+
+      # 2. 拉取官方 PakePlus 安卓核心源码
+      - name: Checkout PakePlus Android
+        uses: actions/checkout@v4
+        with:
+          repository: 'Sjj1024/PakePlus-Android'
+          path: pakeplus-android
+
+      # 3. 核心步骤：使用 jq 深度修改 "android" 块内部的嵌套字段
+      - name: Process and Inject Custom Config
+        run: |
+          # 先把你原汁原味的 200 多行配置文件复制过去
+          cp -r notes/ppconfig.json pakeplus-android/scripts/ppconfig.json
+          
+          # 定义变量获取你在 GitHub 网页输入的参数
+          INPUT_NAME="${{ github.event.inputs.app_name }}"
+          INPUT_URL="${{ github.event.inputs.app_url }}"
+          INPUT_ID="${{ github.event.inputs.app_id }}"          
+
+          # 1. 如果填了新名字，同时修改 android 块下的 name 和 showName
+          if [ -n "$INPUT_NAME" ]; then
+            echo "正在将安卓端应用名称修改为: $INPUT_NAME"
+            jq --arg name "$INPUT_NAME" '.android.name = $name | .android.showName = $name' pakeplus-android/scripts/ppconfig.json > temp.json && mv temp.json pakeplus-android/scripts/ppconfig.json
+          fi
+          
+          # 2. 如果填了新网址，精准修改 android 块下的 webUrl
+          if [ -n "$INPUT_URL" ]; then
+            echo "正在将安卓端网页地址修改为: $INPUT_URL"
+            jq --arg url "$INPUT_URL" '.android.webUrl = $url' pakeplus-android/scripts/ppconfig.json > temp.json && mv temp.json pakeplus-android/scripts/ppconfig.json
+          fi
+
+          if [ -n "$INPUT_ID" ]; then
+            echo "正在将安卓端包名 ID 修改为: $INPUT_ID"
+            jq --arg id "$INPUT_ID" '.android.id = $id' pakeplus-android/scripts/ppconfig.json > temp.json && mv temp.json pakeplus-android/scripts/ppconfig.json
+          fi
+
+      # 4. 设置环境 (Node.js + Java 环境，Java 是编译安卓 APK 必需的)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'zulu'
+
+      # 5. 安装依赖并解析配置
+      - name: Install & Run Worker
+        run: |
+          npm install -g pnpm
+          cd pakeplus-android
+          pnpm install
+          pnpm run pp:worker # 这步会将你的 json 配置应用到原生安卓环境中
+
+      # 6. 执行 Gradle 编译命令生成 APK
+      - name: Build with Gradle
+        run: |
+          cd pakeplus-android/android
+          chmod +x ./gradlew
+          ./gradlew assembleRelease # 编译 Release 版本的 APK
+
+      # 7. 将编译好的 APK 导出为可以下载的文件 (Artifacts)
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: PakePlus-Android-App
+          path: pakeplus-android/android/app/build/outputs/apk/release/*.apk
