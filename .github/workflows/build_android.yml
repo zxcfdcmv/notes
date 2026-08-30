@@ -75,22 +75,27 @@ jobs:
           java-version: '21'
           distribution: 'zulu'
 
-      # 5. 安装依赖并让 Pake 预解析配置
-      - name: Install & Run Worker
+      # 5. 安装系统依赖并让 Pake 预解析配置
+      - name: Install System Deps & Run Worker
         run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          
           npm install -g pnpm
           cd pakeplus-android
           
+          # 放行 pnpm v11+ 的 sharp 编译
           pnpm config set dangerouslyAllowAllBuilds true
+          
           pnpm install
           pnpm run pp:worker
 
       # 6. 执行 Gradle 编译命令生成 APK
       - name: Build with Gradle
         run: |
-          cd pakeplus-android/android
+          cd pakeplus-android
           chmod +x ./gradlew
-          ./gradlew assembleRelease # 编译 Release 版本的 APK
+          ./gradlew :app:assembleRelease  # 最新结构通常通过指定模块来编译
 
       # 7. 将编译好的 APK 导出为可以下载的文件 (Artifacts)
       - name: Upload APK
