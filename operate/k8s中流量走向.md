@@ -27,6 +27,15 @@
     4. Node B 收到数据包后，内核的 CNI 驱动对数据包进行**拆包（解封装）**，还原出原始的 Pod A 到 Pod C 的数据包。
     5. 接着走同节点流程，通过本地网桥转发给 Pod C。
 
+## 通过Service访问
+> [!tip]
+> 由于 Pod 的生命周期短暂、IP 经常变动，K8s 使用 **Service（四层负载均衡）** 来提供固定 IP（ClusterIP）
 
+- **路径**：`Pod` -> `Service VIP` -> **kube-proxy（iptables/IPVS 规则拦截修改）** -> `实际后端 Pod`。
+- **详细过程**：
+    1. Pod 发起请求，目标 IP 是 Service 的虚拟 IP（**ClusterIP**）。
+    2. 请求刚离开 Pod 到达宿主机时，会被宿主机内核的 **`kube-proxy` 维护的规则（IPVS 或 iptables）** 强行拦截。
+    3. 内核在此时执行 **DNAT（目标地址转换）**：根据负载均衡算法，把目标 IP 从“Service VIP”修改为“某个具体的后端真实 Pod IP”。
+    4. 随后，数据包带着修改后的真实 Pod IP，重复上述【同节点】或【跨节点】的 Pod 间通信流程。
 # 南北向流量
 > 集群外部接入的纵向通信
