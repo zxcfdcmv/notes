@@ -21,12 +21,31 @@ installation:
   calicoNetwork:
     bgp: Enabled                       # 开启 BGP 路由模式
     # 根据网络模式调整：纯 BGP 填 1500，IPIP 填 1480，VXLAN 填 1450 
-    mtu: 1450
+    mtu: 1450   # 注意：若有池子用了 VXLAN，全局 MTU 需以最小的为准（即 1450）
+    
     ipPools:
-      - cidr: 10.244.0.0/16            # 集群 Pod 网段
-        blockSize: 26                  # 每个节点分配的子网大小
-        encapsulation: VXLAN            # 纯 BGP 模式设为 None（若要VXLAN则填VXLAN）
+      # 【池子 1：普通业务池（走 VXLAN 封装）】
+      - cidr: 10.244.0.0/16
+        blockSize: 26
+        encapsulation: VXLAN
         natOutgoing: Enabled
+        # 匹配所有没有被打上专属标签的普通 Worker 节点
+        nodeSelector: "!has(network-zone) || network-zone == 'general'"
+
+      # 【池子 2：大扩容追加池（当池子 1 快用完时追加，同样走 VXLAN）】
+      - cidr: 10.99.0.0/16
+        blockSize: 26
+        encapsulation: VXLAN
+        natOutgoing: Enabled
+        nodeSelector: "!has(network-zone) || network-zone == 'general'"
+
+      # 【池子 3：核心大数据/AI节点池（走纯 BGP 无封装，追求极致性能）】
+      - cidr: 172.30.0.0/16
+        blockSize: 24                 # 跑大数据/AI的机器往往单机 Pod 极多，给它分配更大的 Block（/24 包含 256 个 IP）
+        encapsulation: None           # 纯 BGP
+        natOutgoing: Enabled
+        # 只有被打上了 network-zone=high-perf 标签的节点才能使用这个高性能池
+        nodeSelector: "network-zone == 'high-perf'"
 ```
 
 ## 3. 安装
