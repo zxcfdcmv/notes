@@ -20,10 +20,12 @@ installation:
     type: Calico
   calicoNetwork:
     bgp: Enabled                       # 开启 BGP 路由模式
+    # 根据网络模式调整：纯 BGP 填 1500，IPIP 填 1480，VXLAN 填 1450 
+    mtu: 1450
     ipPools:
       - cidr: 10.244.0.0/16            # 集群 Pod 网段
         blockSize: 26                  # 每个节点分配的子网大小
-        encapsulation: None            # 纯 BGP 模式设为 None（若要VXLAN则填VXLAN）
+        encapsulation: VXLAN            # 纯 BGP 模式设为 None（若要VXLAN则填VXLAN）
         natOutgoing: Enabled
 ```
 
