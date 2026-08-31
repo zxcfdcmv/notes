@@ -1,3 +1,9 @@
+---
+tags:
+  - 运维
+  - CNI插件/Calico
+---
+
 ```mermaid
 flowchart TD
     A[Calico<br>整体：网络与安全解决方案] --> B[核心组件]

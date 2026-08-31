@@ -1,8 +1,7 @@
 ---
 tags:
   - 运维
-  - CNI插件
-  - Calico
+  - CNI插件/Calico
 ---
 
 # 部署
