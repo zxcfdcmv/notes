@@ -1,3 +1,8 @@
+---
+tags:
+    - 运维
+    - K8S
+---
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
