@@ -45,7 +45,7 @@ VXLAN 封包比 IPIP 要沉重和复杂得多，因为它不仅封装了 IP，�
 ## 通信路径
 
 ```
-Pod A -> cni0 网桥 -> flannel.1 / vxlan.calico 设备 (VTEP 执行 VXLAN 封包) -> 物理网络 UDP 转发 -> 宿主机 B -> 隧道设备 (解包) -> Pod B
+Pod -> 穿过 veth pair 直达宿主机内核 -> 查宿主机路由表 -> 发现下一跳是 `vxlan.calico` 网卡 -> **`vxlan.calico` 直接在内核中原地执行 VXLAN 四层封包** -> 物理网络 UDP 转发 -> 宿主机 B -> 隧道设备 (解包) -> Pod B
 ```
 
 - **特点**：负责封包和解包的组件叫做 **VTEP（VXLAN Tunnel End Point）**。在 K8s 中，宿主机上的 `flannel.1` 或 `vxlan.calico` 虚拟网卡就是软件实现的 VTEP。
