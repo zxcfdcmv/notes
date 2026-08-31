@@ -1,7 +1,13 @@
-# cowyo 剪切板同步
+---
+tags:
+    - 日常
+    - 效率
+    - 工具
+---
+
 > `termux` + `cowyo` = 跨设备剪切板同步
 > **注意**: **用户名要一致**
-## PC端脚本(nixos)
+# PC端脚本(nixos)
 ```nix
 (writeShellScriptBin "cowyo-up" ''
   TEXT=$(copyq clipboard)
@@ -18,10 +24,10 @@
 '')
 ```
 
-### 使用
+## 使用
 在窗口管理器中绑定键位例如(`ctrl+alt+c`/`ctrl+alt+v`)来上传拉取
 
-## android快捷安装脚本
+# android快捷安装脚本
 > 需要安装`termux`/`termux-api`/`termux-widget`软件
 
 > `~/.shortcuts/tasks`脚本放该目录下, 后台快速执行
@@ -49,5 +55,5 @@ EOF
 chmod +x ~/.shortcuts/tasks/cowyo-pull
 ```
 
-### 使用
+## 使用
 在手机桌面添加桌面小部件termux:widget，小部件中会显示相关脚本

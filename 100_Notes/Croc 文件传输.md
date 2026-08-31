@@ -1,7 +1,13 @@
-# Croc 文件传输
+---
+tags:
+    - 日常
+    - 效率
+    - 工具
+---
+
 > `termux` + `croc` = 跨设备快捷传输文件
 > **注意**: **用户名要一致**
-## PC端脚本(nixos)
+# PC端脚本(nixos)
 ```nix
 (writeShellScriptBin "croc-send" ''
   export CROC_SECRET=${userSettings.username}
@@ -21,10 +27,10 @@
 '')
 ```
 
-### 使用
+## 使用
 命令行/窗口管理器/应用启动器中执行/按键，`croc-send`跳出`fzf`文件选择界面后选择文件即可传输
 
-## android快捷安装脚本
+# android快捷安装脚本
 > 需要安装`termux`/`termux-api`/`termux-widget`软件
 
 > `~/bin/termux-file-editor`脚本可使用系统分享菜单直接分享文件
@@ -77,7 +83,7 @@ EOF
 chmod +x ~/.shortcuts/tasks/croc-recv
 ```
 
-### 注意
+## 注意
 注意修改其中的用户名
-### 使用
+## 使用
 在手机桌面添加桌面小部件termux:widget，小部件中会显示相关脚本，点击脚本后选择文件传输

@@ -8,7 +8,8 @@ title: zxcfdcmv's Notes
 
 | File                                        | 修改时间                       |
 | ------------------------------------------- | -------------------------- |
-| [[index]]                         | 5:47 PM - August 31, 2026  |
+| [[index]]                         | 6:06 PM - August 31, 2026  |
+| [[Croc 文件传输]]          | 6:05 PM - August 31, 2026  |
 | [[HPA]]                     | 5:33 PM - August 31, 2026  |
 | [[IPIP VXLAN 模式]] | 5:21 PM - August 31, 2026  |
 | [[Calico部署优化]]       | 4:33 PM - August 31, 2026  |
@@ -18,8 +19,7 @@ title: zxcfdcmv's Notes
 | [[BGP模式]]                 | 3:17 PM - August 31, 2026  |
 | [[k8s中流量走向]]           | 3:16 PM - August 31, 2026  |
 | [[Calico]]               | 3:15 PM - August 31, 2026  |
-| [[cowyo]]                  | 4:14 PM - August 28, 2026  |
-| [[croc]]                    | 4:14 PM - August 28, 2026  |
+| [[cowyo 剪切板同步]]      | 4:14 PM - August 28, 2026  |
 | [[Deployment]]       | 10:54 PM - August 27, 2026 |
 | [[README]]                       | 10:45 PM - August 27, 2026 |
 
