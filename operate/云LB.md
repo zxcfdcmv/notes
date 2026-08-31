@@ -81,7 +81,7 @@
 > [!success] 解决
 > ```yaml
 > spec:
-  externalTrafficPolicy: Local  # 默认为 Cluster
+>   externalTrafficPolicy: Local  # 默认为 Cluster
 > ```
 
 ### 参数修改影响
