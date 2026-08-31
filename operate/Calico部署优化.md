@@ -73,6 +73,7 @@ spec:
   # 如果你的 K8s 节点处于同一个二层交换机下（同网段），设为 None 性能最高。
   # 如果你的 K8s 节点跨越了不同的机房/三层网段，设为 CrossSubnet：
   # 同网段走纯 BGP 路由（无损），跨网段自动降级为 IPIP 隧道封装，兼顾性能与兼容性。
+  # VXLANCrossSubnet 为 VXLAN 隧道封装
   encapsulation: CrossSubnet
   
   natOutgoing: true               # 允许 Pod 访问外网（SNAT）
