@@ -1,3 +1,9 @@
+---
+tags:
+    - 运维
+    - K8S
+---
+
 ```yaml
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
