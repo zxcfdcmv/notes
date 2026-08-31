@@ -1,3 +1,4 @@
+
 # 部署
 ## 1. 添加 Calico 官方 Helm 仓库
 ```sh
@@ -32,7 +33,7 @@ helm install calico projectcalico/tigera-operator \
 
 # 优化
 > [!tip]
-> 路由器反射()、CrossSubnet
+> 路由反射器(Route Reflector)、CrossSubnet
 ```yaml
 # ==========================================
 # 1. 禁用默认的 Full-Mesh（全网互联）模式
