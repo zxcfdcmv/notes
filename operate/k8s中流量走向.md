@@ -59,6 +59,7 @@
 		- 宿主机内核根据路由指示，把数据包转发给 **`caliB`** 网卡。
 		- 数据包再次穿过 veth 隧道，直接进入 Pod B 的网络空间，最终到达 Pod B 的 `eth0` 网卡，由 Pod B 内部的应用接收。
 
+> [!]
 
 ## 跨节点同网段pod间通信
 - **路径**：`Pod A` -> `veth 对` -> `Node A 宿主机路由表` -> `Node A 物理网卡` -> **物理交换机（二层直接转发）** -> `Node B 物理网卡` -> `Node B 宿主机路由表` -> `veth 对` -> `Pod B`。
@@ -133,3 +134,5 @@
         - 发现 `://example.com` 应该对应 `order-service`。
     4. **关键点**：Ingress Controller 并**不会**把流量发给 Service VIP 让 `kube-proxy` 再转一次，而是通过 K8s API 直接监听该 Service 背后对应的 **Endpoints/EndpointSlice（即直接获取所有后端 Pod 的真实 IP 列表）**。
     5. Ingress Controller 在应用层自己做负载均衡，**直接将 HTTP 请求转发给选中的后端 Pod IP**，绕过了四层虚拟转发，效率极高。
+
+[^1]: 
