@@ -3,24 +3,58 @@ title: zxcfdcmv's Notes
 ---
 # 所有笔记
 > 最近七天修改
-```dataview
-TABLE file.mtime AS 修改时间
-FROM ""
-WHERE file.mtime >= date(today) - dur(7 days)
-SORT file.mtime DESC
-```
+<!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM "" WHERE file.mtime >= date(today) - dur(7 days) SORT file.mtime DESC -->
+<!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM "" WHERE file.mtime >= date(today) - dur(7 days) SORT file.mtime DESC -->
+
+| File                                        | 修改时间                       |
+| ------------------------------------------- | -------------------------- |
+| [[index]]                         | 5:47 PM - August 31, 2026  |
+| [[HPA]]                     | 5:33 PM - August 31, 2026  |
+| [[IPIP VXLAN 模式]] | 5:21 PM - August 31, 2026  |
+| [[Calico部署优化]]       | 4:33 PM - August 31, 2026  |
+| [[CNI插件为pod分配ip]] | 3:20 PM - August 31, 2026  |
+| [[问题]]                       | 3:17 PM - August 31, 2026  |
+| [[云LB]]                     | 3:17 PM - August 31, 2026  |
+| [[BGP模式]]                 | 3:17 PM - August 31, 2026  |
+| [[k8s中流量走向]]           | 3:16 PM - August 31, 2026  |
+| [[Calico]]               | 3:15 PM - August 31, 2026  |
+| [[cowyo]]                  | 4:14 PM - August 28, 2026  |
+| [[croc]]                    | 4:14 PM - August 28, 2026  |
+| [[Deployment]]       | 10:54 PM - August 27, 2026 |
+| [[README]]                       | 10:45 PM - August 27, 2026 |
+
+<!-- SerializedQuery END -->
 
 # 运维
-```dataview
-TABLE file.mtime AS 修改时间 
-FROM #运维
-SORT file.mtime DESC
-```
+<!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM #运维 SORT file.mtime DESC -->
+<!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM #运维 SORT file.mtime DESC -->
+
+| File                                        | 修改时间                      |
+| ------------------------------------------- | ------------------------- |
+| [[HPA]]                     | 5:33 PM - August 31, 2026 |
+| [[IPIP VXLAN 模式]] | 5:21 PM - August 31, 2026 |
+| [[Calico部署优化]]       | 4:33 PM - August 31, 2026 |
+| [[CNI插件为pod分配ip]] | 3:20 PM - August 31, 2026 |
+| [[问题]]                       | 3:17 PM - August 31, 2026 |
+| [[云LB]]                     | 3:17 PM - August 31, 2026 |
+| [[BGP模式]]                 | 3:17 PM - August 31, 2026 |
+| [[k8s中流量走向]]           | 3:16 PM - August 31, 2026 |
+| [[Calico]]               | 3:15 PM - August 31, 2026 |
+
+<!-- SerializedQuery END -->
 
 ## Calico
-```dataview
-TABLE file.mtime AS 修改时间 
-FROM #CNI插件/Calico 
-SORT file.mtime DESC
-```
+<!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM #CNI插件/Calico SORT file.mtime DESC -->
+<!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM #CNI插件/Calico SORT file.mtime DESC -->
+
+| File                                        | 修改时间                      |
+| ------------------------------------------- | ------------------------- |
+| [[IPIP VXLAN 模式]] | 5:21 PM - August 31, 2026 |
+| [[Calico部署优化]]       | 4:33 PM - August 31, 2026 |
+| [[CNI插件为pod分配ip]] | 3:20 PM - August 31, 2026 |
+| [[BGP模式]]                 | 3:17 PM - August 31, 2026 |
+| [[k8s中流量走向]]           | 3:16 PM - August 31, 2026 |
+| [[Calico]]               | 3:15 PM - August 31, 2026 |
+
+<!-- SerializedQuery END -->
 
