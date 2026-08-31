@@ -1,3 +1,9 @@
+---
+tags:
+  - 运维
+  - CNI插件
+  - Calico
+---
 
 # 部署
 ## 1. 添加 Calico 官方 Helm 仓库
