@@ -1,7 +1,6 @@
 ---
 tags:
-  - 运维
-  - CNI插件/Calico
+  - 运维/K8S/CNI插件/Calico
 ---
 
 > [!note] 总结

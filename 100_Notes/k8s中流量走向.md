@@ -1,8 +1,6 @@
 ---
 tags:
-  - 运维
-  - K8S
-  - CNI插件/Calico
+  - 运维/K8S/CNI插件/Calico
 ---
 
 > [!note] k8s网络模型核心原则

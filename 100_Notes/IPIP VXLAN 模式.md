@@ -1,7 +1,6 @@
 ---
 tags:
-  - 运维
-  - CNI插件/Calico
+  - 运维/K8S/CNI插件/Calico
 ---
 > [!tip] 本质
 > - Overlay（叠加/隧道）网络技术
