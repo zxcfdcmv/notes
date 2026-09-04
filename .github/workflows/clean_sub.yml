@@ -1,0 +1,86 @@
+name: Auto Clean Multiple Subs to Release
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  clean-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Pure Subconverter Binary
+        run: |
+          echo "正在从官方开源仓库下载就地转换器..."
+          curl -sL -o subconverter.tar.gz https://github.com/tindy2013/subconverter/releases/download/v0.9.0/subconverter_linux64.tar.gz
+          tar -xzf subconverter.tar.gz
+
+      - name: Fetch, Merge and Filter Multiple Nodes
+        run: |
+          # 1. 【在这里填入你的所有订阅】无论是个人的 JSON、YAML 还是公开的 TXT，统统丢进来
+          SUBS_ARRAY=(
+            "https://d.zrfme.com/vless-base64"
+            "https://gh-proxy.org/raw.githubusercontent.com/snakem982/proxypool/main/source/v2ray-2.txt"
+          )
+          
+          touch all_decoded_merged.txt
+          touch clean_443_merged.txt
+          
+          # 2. 遍历处理所有订阅链接
+          for sub in "${SUBS_ARRAY[@]}"; do
+            echo "正在处理订阅: $sub"
+            
+            # 【核心升级】判断：如果是 yaml、json 或者是 clash/singbox 类型的非标文本
+            if echo "$sub" | grep -qE "\.(yaml|yml|json)" || echo "$sub" | grep -qE "(clash|singbox|sing-box)"; then
+               echo "检测到结构化配置格式(YAML/JSON)，正在通过【本地安全二进制】进行就地转换..."
+               
+               # 动态覆写你在本地看到的那个 generate.ini 配置文件
+               cat > ./subconverter/generate.ini <<EOF
+               [General]
+               [Profile]
+               target=v2ray
+               url=${sub}
+               output=output_v2ray.txt
+EOF
+               
+               # 执行云端就地转换
+               cd subconverter && ./subconverter -g > /dev/null 2>&1 && cd ..
+               RAW_DATA=$(cat ./subconverter/output_v2ray.txt 2>/dev/null || echo "")
+               
+               # 清理临时文件，防止污染下一次循环
+               rm -f ./subconverter/output_v2ray.txt ./subconverter/generate.ini
+            else
+               # 如果是标准的明文或 Base64 文本，直接用 curl 抓取即可
+               RAW_DATA=$(curl -sL "$sub")
+            fi
+            
+            # 自动解密大鹅通用的 Base64 文本
+            if echo "$RAW_DATA" | grep -q "[:/]"; then
+                DECODED="$RAW_DATA"
+            else
+                DECODED=$(echo "$RAW_DATA" | base64 -d 2>/dev/null || echo "")
+            fi
+            
+            # 合并与端口清洗 [1.5]
+            if [ ! -z "$DECODED" ]; then
+              echo "$DECODED" >> all_decoded_merged.txt
+              echo "$DECODED" | grep -E ":443([/?#]|$)" | grep -vE "回国|中国|CN" >> clean_443_merged.txt || true
+            fi
+          done
+          
+          # 3. 去重并最终导出为大鹅完美兼容的 Base64 密文
+          sort -u all_decoded_merged.txt | base64 -w0 > all_nodes.txt
+          sort -u clean_443_merged.txt | base64 -w0 > clean_443_nodes.txt
+          echo "所有不同格式的订阅均已安全清洗合并完成！"
+
+      - name: Update GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create latest all_nodes.txt clean_443_nodes.txt \
+            --title "Latest Cleaned Subs" \
+            --notes "由纯安全、无日志泄漏的 GitHub Actions 本地二进制定时清洗的优质 443 节点" \
+            --clobber
