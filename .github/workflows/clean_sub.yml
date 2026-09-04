@@ -20,10 +20,10 @@ jobs:
 
       - name: Fetch, Merge and Filter Multiple Nodes
         run: |
-          # 1. 【在这里填入你的所有订阅】无论是个人的 JSON、YAML 还是公开的 TXT，统统丢进来
+          # 1. 【在这里填入的所有订阅】无论是个人的 JSON、YAML 还是公开的 TXT，统统丢进来
           SUBS_ARRAY=(
             "https://d.zrfme.com/vless-base64"
-            "https://gh-proxy.org/raw.githubusercontent.com/snakem982/proxypool/main/source/v2ray-2.txt"
+            "https://raw.githubusercontent.com/snakem982/proxypool/main/source/v2ray-2.txt"
           )
           
           touch all_decoded_merged.txt
@@ -69,11 +69,15 @@ jobs:
           sort -u clean_443_merged.txt | base64 -w0 > clean_443_nodes.txt
           echo "所有不同格式的订阅均已安全清洗合并完成！"
 
-      - name: Update GitHub Release
+      - name: Upload or Update Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Latest Cleaned Subs"
+          body: "由纯安全、无日志泄漏的 GitHub Actions 本地二进制定时清洗的优质 443 节点"
+          files: |
+            all_nodes.txt
+            clean_443_nodes.txt
+          overwrite: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create latest all_nodes.txt clean_443_nodes.txt \
-            --title "Latest Cleaned Subs" \
-            --notes "由纯安全、无日志泄漏的 GitHub Actions 本地二进制定时清洗的优质 443 节点" \
-            --clobber
