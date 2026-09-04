@@ -35,33 +35,26 @@ jobs:
             
             # 【核心升级】判断：如果是 yaml、json 或者是 clash/singbox 类型的非标文本
             if echo "$sub" | grep -qE "\.(yaml|yml|json)" || echo "$sub" | grep -qE "(clash|singbox|sing-box)"; then
-               echo "检测到结构化配置格式(YAML/JSON)，正在通过【本地安全二进制】进行就地转换..."
-               
-               # 动态覆写你在本地看到的那个 generate.ini 配置文件
-               cat > ./subconverter/generate.ini <<-EOF
-               [General]
-               [Profile]
-               target=v2ray
-               url=${sub}
-               output=output_v2ray.txt
-               EOF
-               
-               # 执行云端就地转换
-               cd subconverter && ./subconverter -g > /dev/null 2>&1 && cd ..
-               RAW_DATA=$(cat ./subconverter/output_v2ray.txt 2>/dev/null || echo "")
-               
-               # 清理临时文件，防止污染下一次循环
-               rm -f ./subconverter/output_v2ray.txt ./subconverter/generate.ini
+              echo "检测到结构化配置格式(YAML/JSON)，正在通过【本地安全二进制】进行就地转换..."
+
+              printf "[General]\n[Profile]\ntarget=v2ray\nurl=%s\noutput=output_v2ray.txt\n" "$sub" > ./subconverter/generate.ini
+
+              # 执行云端就地转换
+              cd subconverter && ./subconverter -g > /dev/null 2>&1 && cd ..
+              RAW_DATA=$(cat ./subconverter/output_v2ray.txt 2>/dev/null || echo "")
+
+              # 清理临时文件，防止污染下一次循环
+              rm -f ./subconverter/output_v2ray.txt ./subconverter/generate.ini
             else
-               # 如果是标准的明文或 Base64 文本，直接用 curl 抓取即可
-               RAW_DATA=$(curl -sL "$sub")
+              # 如果是标准的明文或 Base64 文本，直接用 curl 抓取即可
+              RAW_DATA=$(curl -sL "$sub")
             fi
             
             # 自动解密大鹅通用的 Base64 文本
             if echo "$RAW_DATA" | grep -q "[:/]"; then
-                DECODED="$RAW_DATA"
+              DECODED="$RAW_DATA"
             else
-                DECODED=$(echo "$RAW_DATA" | base64 -d 2>/dev/null || echo "")
+              DECODED=$(echo "$RAW_DATA" | base64 -d 2>/dev/null || echo "")
             fi
             
             # 合并与端口清洗 [1.5]
