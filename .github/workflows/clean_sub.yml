@@ -52,26 +52,26 @@ jobs:
                 DECODED="$RAW_DATA"
             fi
             
-            # C. 追加合流与清洗
             if [ ! -z "$DECODED" ]; then
-              echo "$DECODED" >> all_decoded_merged.txt
-              
+              # 【修复细节】只追加非空、且真正包含 :// 协议的有效节点行，彻底剔除空行
+              echo "$DECODED" | grep "://" >> all_decoded_merged.txt || true
               echo "$DECODED" | grep -E "://[^#]+:443" >> clean_443_merged.txt || true
             fi
           done
           
-          # 3. 去重与防空文件兜底
-          SORTED_ALL=$(sort -u all_decoded_merged.txt)
-          SORTED_CLEAN=$(sort -u clean_443_merged.txt)
+          # 3. 去重与防空文件兜底（【核心修正】：移除最后的 base64 编码，直接输出明文！）
+          # 用 grep -v '^$' 强力剔除所有可能混入的垃圾空行
+          SORTED_ALL=$(sort -u all_decoded_merged.txt | grep -v '^$')
+          SORTED_CLEAN=$(sort -u clean_443_merged.txt | grep -v '^$')
           
           if [ -z "$SORTED_CLEAN" ]; then
              SORTED_CLEAN="# No 443 nodes found at this time, waiting for next update."
           fi
           
-          # 最终导出为 dae 兼容的 Base64 密文
-          echo "$SORTED_ALL" | base64 -w0 > all_nodes.txt
-          echo "$SORTED_CLEAN" | base64 -w0 > clean_443_nodes.txt
-          echo "所有订阅均已安全清洗合并完成！"
+          # 【这回完美了】直接把冰清玉洁的多行明文直链存进文件
+          echo "$SORTED_ALL" > all_nodes.txt
+          echo "$SORTED_CLEAN" > clean_443_nodes.txt
+          echo "所有订阅均已安全清洗合并为纯明文格式！"
 
       - name: Upload or Update Release Assets
         uses: softprops/action-gh-release@v2
