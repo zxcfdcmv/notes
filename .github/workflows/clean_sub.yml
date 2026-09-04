@@ -20,7 +20,7 @@ jobs:
 
       - name: Fetch, Merge and Filter Multiple Nodes
         run: |
-          # 1. 【在这里填入的所有订阅】无论是个人的 JSON、YAML 还是公开的 TXT，统统丢进来
+          # 1. 填入所有订阅
           SUBS_ARRAY=(
             "https://d.zrfme.com/vless-base64"
             "https://raw.githubusercontent.com/snakem982/proxypool/main/source/v2ray-2.txt"
@@ -33,41 +33,45 @@ jobs:
           for sub in "${SUBS_ARRAY[@]}"; do
             echo "正在处理订阅: $sub"
             
-            # 【核心升级】判断：如果是 yaml、json 或者是 clash/singbox 类型的非标文本
             if echo "$sub" | grep -qE "\.(yaml|yml|json)" || echo "$sub" | grep -qE "(clash|singbox|sing-box)"; then
-              echo "检测到结构化配置格式(YAML/JSON)，正在通过【本地安全二进制】进行就地转换..."
-
-              printf "[General]\n[Profile]\ntarget=v2ray\nurl=%s\noutput=output_v2ray.txt\n" "$sub" > ./subconverter/generate.ini
-
-              # 执行云端就地转换
-              cd subconverter && ./subconverter -g > /dev/null 2>&1 && cd ..
-              RAW_DATA=$(cat ./subconverter/output_v2ray.txt 2>/dev/null || echo "")
-
-              # 清理临时文件，防止污染下一次循环
-              rm -f ./subconverter/output_v2ray.txt ./subconverter/generate.ini
+               echo "检测到配置格式(YAML/JSON)，正在进行本地转换..."
+               printf "[General]\n[Profile]\ntarget=v2ray\nurl=%s\noutput=output_v2ray.txt\n" "$sub" > ./subconverter/generate.ini
+               cd subconverter && ./subconverter -g > /dev/null 2>&1 && cd ..
+               RAW_DATA=$(cat ./subconverter/output_v2ray.txt 2>/dev/null || echo "")
+               rm -f ./subconverter/output_v2ray.txt ./subconverter/generate.ini
             else
-              # 如果是标准的明文或 Base64 文本，直接用 curl 抓取即可
-              RAW_DATA=$(curl -sL "$sub")
+               RAW_DATA=$(curl -sL "$sub")
             fi
             
-            # 自动解密大鹅通用的 Base64 文本
-            if echo "$RAW_DATA" | grep -q "[:/]"; then
-              DECODED="$RAW_DATA"
+            TRY_DECODE=$(echo "$RAW_DATA" | base64 -d 2>/dev/null || echo "")
+            if echo "$TRY_DECODE" | grep -qE "(vless|vmess|trojan|ss|ssr)://"; then
+                echo "-> 成功识别并解密 Base64 订阅源"
+                DECODED="$TRY_DECODE"
             else
-              DECODED=$(echo "$RAW_DATA" | base64 -d 2>/dev/null || echo "")
+                echo "-> 识别为明文订阅源（或已被转换器摊平）"
+                DECODED="$RAW_DATA"
             fi
             
-            # 合并与端口清洗 [1.5]
+            # C. 追加合流与清洗
             if [ ! -z "$DECODED" ]; then
               echo "$DECODED" >> all_decoded_merged.txt
-              echo "$DECODED" | grep -E ":443([/?#]|$)" | grep -vE "回国|中国|CN" >> clean_443_merged.txt || true
+              
+              echo "$DECODED" | grep -E "://[^#]+:443" >> clean_443_merged.txt || true
             fi
           done
           
-          # 3. 去重并最终导出为大鹅完美兼容的 Base64 密文
-          sort -u all_decoded_merged.txt | base64 -w0 > all_nodes.txt
-          sort -u clean_443_merged.txt | base64 -w0 > clean_443_nodes.txt
-          echo "所有不同格式的订阅均已安全清洗合并完成！"
+          # 3. 去重与防空文件兜底
+          SORTED_ALL=$(sort -u all_decoded_merged.txt)
+          SORTED_CLEAN=$(sort -u clean_443_merged.txt)
+          
+          if [ -z "$SORTED_CLEAN" ]; then
+             SORTED_CLEAN="# No 443 nodes found at this time, waiting for next update."
+          fi
+          
+          # 最终导出为 dae 兼容的 Base64 密文
+          echo "$SORTED_ALL" | base64 -w0 > all_nodes.txt
+          echo "$SORTED_CLEAN" | base64 -w0 > clean_443_nodes.txt
+          echo "所有订阅均已安全清洗合并完成！"
 
       - name: Upload or Update Release Assets
         uses: softprops/action-gh-release@v2
@@ -78,6 +82,6 @@ jobs:
           files: |
             all_nodes.txt
             clean_443_nodes.txt
-          overwrite: true
+          overwrite_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
