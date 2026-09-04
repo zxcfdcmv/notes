@@ -38,7 +38,7 @@ jobs:
                echo "检测到结构化配置格式(YAML/JSON)，正在通过【本地安全二进制】进行就地转换..."
                
                # 动态覆写你在本地看到的那个 generate.ini 配置文件
-               cat > ./subconverter/generate.ini <<EOF
+               cat > ./subconverter/generate.ini <<-EOF
                [General]
                [Profile]
                target=v2ray
