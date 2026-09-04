@@ -44,7 +44,7 @@ jobs:
                target=v2ray
                url=${sub}
                output=output_v2ray.txt
-EOF
+               EOF
                
                # 执行云端就地转换
                cd subconverter && ./subconverter -g > /dev/null 2>&1 && cd ..
