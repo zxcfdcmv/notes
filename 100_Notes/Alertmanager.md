@@ -172,4 +172,4 @@ inhibit_rules:
           annotations:
             summary: "服务 {{ $labels.service }} 5xx 错误率过高"
             description: "当前 5xx 错误率已超过 5%，持续 2 分钟。"
-   ```
+   ``` ^d81f5e ^74b56f

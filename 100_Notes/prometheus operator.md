@@ -10,7 +10,8 @@ tags:
 > [!tip] 简单来说
 > **用 Kubernetes 的 YAML 文件来声明式地管理 Prometheus 集群，而不用手动维护配置文件和服务。**
 # 核心组件
-## [[Prometheus Server#Prometheus Operator]]
+## Prometheus
+> 配置: [[Prometheus Server#Prometheus Operator]]
 - **作用**：定义 [[Prometheus Server]] 实例。
 - **特性**：可以直接在 YAML 中声明副本数（实现高可用）、持久化存储（PVC）、数据保留时间等。Operator 会根据该定义自动创建并管理背后的 `StatefulSet`。
 
@@ -19,12 +20,13 @@ tags:
 - **原理**：它通过 `Label Selector`（标签选择器）去匹配集群中的 Service。一旦匹配成功，Prometheus 就会自动将该 Service 后端的 Pod 加入到抓取目标中（Target）。
 
 ## PodMonitor
-- **作用**：定义 Alertmanager 实例（负责告警的去重、分组和分发）。Operator 会自动将其部署为 `StatefulSet` 并在 Prometheus 中做好关联配置。
+- **作用**：与 ServiceMonitor 类似，但它跳过了 Service，直接通过标签匹配和监控底层的 **Pod**（适用于不需要或没有 Service 暴露的 Pod）。
 
 ## [[Alertmanager]]
-- **作用**：定义 Alertmanager 实例（负责告警的去重、分组和分发）。Operator 会自动将其部署为 `StatefulSet` 并在 Prometheus 中做好关联配置
+- **作用**：定义 [[Alertmanager]] 实例（负责告警的去重、分组和分发）。Operator 会自动将其部署为 `StatefulSet` 并在 Prometheus 中做好关联配置
 
 ## PrometheusRule
+> 配置: [[Alertmanager]]
 - **作用**：定义 Prometheus 的告警规则（Alerting Rules）和记录规则（Recording Rules）。
 - **优势**：直接用 Kubernetes YAML 编写 PromQL 语句，Operator 会自动将这些规则打包注入到 Prometheus 的配置中。
 
