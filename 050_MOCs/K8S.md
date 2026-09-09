@@ -1,16 +1,9 @@
-
-<!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM #运维 SORT file.mtime DESC -->
-<!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM #运维 SORT file.mtime DESC -->
+<!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM #运维/K8S  SORT file.mtime DESC -->
+<!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM #运维/K8S  SORT file.mtime DESC -->
 
 | File                                                                  | 修改时间                          |
 | --------------------------------------------------------------------- | ----------------------------- |
 | [[k8s中流量走向]]                                   | 6:02 PM - September 09, 2026  |
-| [[ServiceMonitor]]                       | 5:14 PM - September 09, 2026  |
-| [[Prometheus原理]]                           | 5:14 PM - September 09, 2026  |
-| [[Prometheus Server]]                 | 5:14 PM - September 09, 2026  |
-| [[prometheus operator]]             | 5:14 PM - September 09, 2026  |
-| [[Alertmanager]]                           | 5:14 PM - September 09, 2026  |
-| [[监控指标]]                                           | 5:14 PM - September 09, 2026  |
 | [[磁盘空间不足导致的问题都有哪些，如何处理]]           | 4:47 PM - September 03, 2026  |
 | [[k8s中pod运行正常但服务无法访问都可能有啥原因]] | 9:41 AM - September 03, 2026  |
 | [[k8s节点NotReady问题]]                     | 9:39 AM - September 03, 2026  |
@@ -24,4 +17,3 @@
 | [[云LB]]                                             | 11:18 AM - September 02, 2026 |
 
 <!-- SerializedQuery END -->
-

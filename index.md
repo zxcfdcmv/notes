@@ -4,30 +4,40 @@ title: zxcfdcmv's Notes
 # 核心知识地图（MOCs）
 [[日常]]
 [[运维]]
+[[K8S]]
+[[Prometheus]]
+[[050_MOCs/Calico|Calico]]
 
 # 最近笔记
 > 最近七天修改
 <!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM "" WHERE file.mtime >= date(today) - dur(7 days) SORT file.mtime DESC -->
 <!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM "" WHERE file.mtime >= date(today) - dur(7 days) SORT file.mtime DESC -->
 
-| File                                              | 修改时间                       |
-| ------------------------------------------------- | -------------------------- |
-| [[index]]                               | 6:25 PM - August 31, 2026  |
-| [[日常]]                            | 6:23 PM - August 31, 2026  |
-| [[运维]]                            | 6:23 PM - August 31, 2026  |
-| [[Deployment]]           | 6:10 PM - August 31, 2026  |
-| [[云LB]]                         | 6:09 PM - August 31, 2026  |
-| [[cowyo 剪切板同步]]         | 6:07 PM - August 31, 2026  |
-| [[Croc 文件传输]]             | 6:06 PM - August 31, 2026  |
-| [[HPA]]                         | 5:33 PM - August 31, 2026  |
-| [[IPIP VXLAN 模式]]     | 5:21 PM - August 31, 2026  |
-| [[Calico部署优化]]           | 4:33 PM - August 31, 2026  |
-| [[CNI插件为pod分配ip]]     | 3:20 PM - August 31, 2026  |
-| [[k8s节点NotReady问题]] | 3:17 PM - August 31, 2026  |
-| [[BGP模式]]                     | 3:17 PM - August 31, 2026  |
-| [[k8s中流量走向]]               | 3:16 PM - August 31, 2026  |
-| [[Calico]]                   | 3:15 PM - August 31, 2026  |
-| [[README]]                             | 10:45 PM - August 27, 2026 |
+| File                                                                  | 修改时间                          |
+| --------------------------------------------------------------------- | ----------------------------- |
+| [[index]]                                                   | 6:03 PM - September 09, 2026  |
+| [[运维]]                                                | 6:02 PM - September 09, 2026  |
+| [[050_MOCs/Calico.md\|Calico]]                                        | 6:02 PM - September 09, 2026  |
+| [[K8S]]                                              | 6:02 PM - September 09, 2026  |
+| [[k8s中流量走向]]                                   | 6:02 PM - September 09, 2026  |
+| [[Prometheus]]                                | 6:02 PM - September 09, 2026  |
+| [[ServiceMonitor]]                       | 5:14 PM - September 09, 2026  |
+| [[Prometheus原理]]                           | 5:14 PM - September 09, 2026  |
+| [[Prometheus Server]]                 | 5:14 PM - September 09, 2026  |
+| [[prometheus operator]]             | 5:14 PM - September 09, 2026  |
+| [[Alertmanager]]                           | 5:14 PM - September 09, 2026  |
+| [[监控指标]]                                           | 5:14 PM - September 09, 2026  |
+| [[磁盘空间不足导致的问题都有哪些，如何处理]]           | 4:47 PM - September 03, 2026  |
+| [[k8s中pod运行正常但服务无法访问都可能有啥原因]] | 9:41 AM - September 03, 2026  |
+| [[k8s节点NotReady问题]]                     | 9:39 AM - September 03, 2026  |
+| [[IPIP VXLAN 模式]]                         | 11:19 AM - September 02, 2026 |
+| [[HPA]]                                             | 11:19 AM - September 02, 2026 |
+| [[Deployment]]                               | 11:19 AM - September 02, 2026 |
+| [[CNI插件为pod分配ip]]                         | 11:19 AM - September 02, 2026 |
+| [[100_Notes/Calico.md\|Calico]]                                       | 11:19 AM - September 02, 2026 |
+| [[Calico部署优化]]                               | 11:19 AM - September 02, 2026 |
+| [[BGP模式]]                                         | 11:18 AM - September 02, 2026 |
+| [[云LB]]                                             | 11:18 AM - September 02, 2026 |
 
 <!-- SerializedQuery END -->
 
