@@ -1,6 +1,6 @@
 ---
 tags:
-    - 运维/prometheus
+    - 运维/Prometheus
 ---
 > [!note]
 > 基于**时序列数据库（TSDB）**，核心采用**拉取（Pull）模式**从被监控目标中获取监控指标数据

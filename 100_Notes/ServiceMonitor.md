@@ -1,6 +1,6 @@
 ---
 tags:
-    - 运维/prometheus
+    - 运维/Prometheus
 ---
 > [!tip]
 > 让 proemtheus 根据标签（Label）去自动发现并抓取这一组 Service 的监控指标
