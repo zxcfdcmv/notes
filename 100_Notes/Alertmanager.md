@@ -100,3 +100,76 @@ inhibit_rules:
 ```
 
 ## prometheus operator (AlertmanagerConfig)
+1. 配置业务团队自身的告警路由 (`AlertmanagerConfig`)
+   假设这是在 `dev-team-a` 命名空间下配置的告警接收策略：
+   ```yml
+    apiVersion: ://coreos.com
+    kind: AlertmanagerConfig
+    metadata:
+      name: team-a-alert-config
+      namespace: dev-team-a # 仅对该命名空间下的告警生效
+      labels:
+        release: kube-prometheus-stack # 确保能被 Prometheus 实例的 alertmanagerConfigSelector 匹配
+    spec:
+      route:
+        groupBy: ['alertname', 'service']
+        groupWait: 30s
+        groupInterval: 5m
+        repeatInterval: 6h
+        receiver: 'team-a-dingtalk' # 默认发到团队钉钉
+        routes:
+        - matchers:
+          - name: severity
+            value: critical
+          receiver: 'team-a-email-critical' # 紧急告警额外抄送邮件
+      receivers:
+      - name: 'team-a-dingtalk'
+        webhookConfigs:
+        - url: 'http://cluster.local'
+          sendResolved: true
+      - name: 'team-a-email-critical'
+        emailConfigs:
+        - to: 'team-a-leader@yourdomain.com'
+          sendResolved: true
+          # 认证密码等敏感信息建议引用 K8s Secret
+          authPassword:
+            name: alertmanager-smtp-secret
+            key: password
+   ```
+
+2. 配套的密码凭证 (`Secret`)
+   针对邮件密码等敏感信息，在同命名空间下创建 K8s Secret：
+   ```yml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: alertmanager-smtp-secret
+      namespace: dev-team-a
+    type: Opaque
+    stringData:
+      password: "your-email-token-or-password"
+   ```
+3. 配套的告警规则 (`PrometheusRule`)
+   将上述路由与告警规则结合，业务团队只需在自己的 Namespace 下再部署一个 `PrometheusRule`，带上对应的标签即可触发上述路由：
+   ```yml
+    apiVersion: ://coreos.com
+    kind: PrometheusRule
+    metadata:
+      name: team-a-business-alerts
+      namespace: dev-team-a
+      labels:
+        release: kube-prometheus-stack # 确保被 Prometheus 的 ruleSelector 匹配
+    spec:
+      groups:
+      - name: app-error-rates
+        rules:
+        - alert: Http5xxRateTooHigh
+          expr: sum(rate(http_requests_total{status=~"5.*"}[5m])) by (service) / sum(rate(http_requests_total[5m])) by (service) * 100 > 5
+          for: 2m
+          labels:
+            severity: critical # 触发上面的邮件额外抄送路由
+            service: order-service
+          annotations:
+            summary: "服务 {{ $labels.service }} 5xx 错误率过高"
+            description: "当前 5xx 错误率已超过 5%，持续 2 分钟。"
+   ```
