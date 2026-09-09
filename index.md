@@ -1,13 +1,24 @@
 ---
 title: zxcfdcmv's Notes
 ---
+---
 # 核心知识地图（MOCs）
-[[日常]]
-[[运维]]
-[[K8S]]
-[[Prometheus]]
-[[050_MOCs/Calico|Calico]]
+## 工具
+[[工具]]
+## 运维
+<!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM #MOCs/运维   SORT file.mtime DESC -->
+<!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM #MOCs/运维   SORT file.mtime DESC -->
 
+| File                                   | 修改时间                         |
+| -------------------------------------- | ---------------------------- |
+| [[Prometheus]] | 6:13 PM - September 09, 2026 |
+| [[K8S]]               | 6:13 PM - September 09, 2026 |
+| [[050_MOCs/Calico.md\|Calico]]         | 6:13 PM - September 09, 2026 |
+| [[运维]]                 | 6:13 PM - September 09, 2026 |
+
+<!-- SerializedQuery END -->
+
+---
 # 最近笔记
 > 最近七天修改
 <!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM "" WHERE file.mtime >= date(today) - dur(7 days) SORT file.mtime DESC -->
@@ -15,12 +26,15 @@ title: zxcfdcmv's Notes
 
 | File                                                                  | 修改时间                          |
 | --------------------------------------------------------------------- | ----------------------------- |
-| [[index]]                                                   | 6:03 PM - September 09, 2026  |
-| [[运维]]                                                | 6:02 PM - September 09, 2026  |
-| [[050_MOCs/Calico.md\|Calico]]                                        | 6:02 PM - September 09, 2026  |
-| [[K8S]]                                              | 6:02 PM - September 09, 2026  |
+| [[index]]                                                   | 6:15 PM - September 09, 2026  |
+| [[工具]]                                                | 6:14 PM - September 09, 2026  |
+| [[cowyo 剪切板同步]]                             | 6:14 PM - September 09, 2026  |
+| [[Croc 文件传输]]                                 | 6:14 PM - September 09, 2026  |
+| [[Prometheus]]                                | 6:13 PM - September 09, 2026  |
+| [[K8S]]                                              | 6:13 PM - September 09, 2026  |
+| [[050_MOCs/Calico.md\|Calico]]                                        | 6:13 PM - September 09, 2026  |
+| [[运维]]                                                | 6:13 PM - September 09, 2026  |
 | [[k8s中流量走向]]                                   | 6:02 PM - September 09, 2026  |
-| [[Prometheus]]                                | 6:02 PM - September 09, 2026  |
 | [[ServiceMonitor]]                       | 5:14 PM - September 09, 2026  |
 | [[Prometheus原理]]                           | 5:14 PM - September 09, 2026  |
 | [[Prometheus Server]]                 | 5:14 PM - September 09, 2026  |
