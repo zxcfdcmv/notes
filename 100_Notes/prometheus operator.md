@@ -10,8 +10,8 @@ tags:
 > [!tip] 简单来说
 > **用 Kubernetes 的 YAML 文件来声明式地管理 Prometheus 集群，而不用手动维护配置文件和服务。**
 # 核心组件
-## Prometheus
-- **作用**：定义 Prometheus Server 实例。
+## [[Prometheus Server#Prometheus Operator]]
+- **作用**：定义 [[Prometheus Server]] 实例。
 - **特性**：可以直接在 YAML 中声明副本数（实现高可用）、持久化存储（PVC）、数据保留时间等。Operator 会根据该定义自动创建并管理背后的 `StatefulSet`。
 
 ## ServiceMonitor
