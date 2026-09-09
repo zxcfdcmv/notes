@@ -42,3 +42,61 @@ tags:
    - 最后，经过降噪、分类的告警信息会被转化为对应接收介质（Webhook, Email, Slack 等）所需的格式，正式发送出去。
 
 ---
+# 配置
+## 传统
+```yml
+global:
+  resolve_timeout: 5m # 如果5分钟内没有收到新告警，自动标记为已恢复
+  smtp_smarthost: '://qq.com' # 邮件服务器地址
+  smtp_from: 'alert@yourdomain.com'
+  smtp_auth_username: 'alert@yourdomain.com'
+  smtp_auth_password: 'your-smtp-password'
+  smtp_require_tls: false
+
+# 1. 路由树定义（告警传进来后，从上到下匹配）
+route:
+  group_by: ['alertname', 'cluster', 'service'] # 按照这三个标签进行分组聚合
+  group_wait: 30s      # 初次告警等待30秒，看有没有同组告警一起触发
+  group_interval: 5m   # 同一组内有新告警加入时，等待5分钟再发新通知
+  repeat_interval: 12h # 故障未解决，每12小时重复发送一次
+  receiver: 'default-receiver' # 默认接收人（未匹配到任何子路由时使用）
+
+  # 子路由（Routes）
+  routes:
+  - match:
+      severity: critical # 匹配紧急告警
+    receiver: 'ops-phone-webhook' # 发送到电话/严重告警通道
+    continue: true                # 继续向下匹配，同时发邮件
+    
+  - match_re:
+      service: ^(user-service|order-service)$ # 正则匹配特定核心业务
+    receiver: 'dev-team-a'
+
+# 2. 接收人通道具体配置（Receivers）
+receivers:
+- name: 'default-receiver'
+  email_configs:
+  - to: 'devops@yourdomain.com'
+    send_resolved: true # 告警恢复时是否发送通知
+
+- name: 'ops-phone-webhook'
+  webhook_configs:
+  - url: 'http://dingtalk-webhook-adapter:8060/dingtalk/ops/send' # 钉钉转发网关
+    send_resolved: true
+
+- name: 'dev-team-a'
+  webhook_configs:
+  - url: 'http://wechat-webhook-adapter:8060/wechat/team-a/send' # 企业微信转发网关
+    send_resolved: true
+
+# 3. 抑制规则（Inhibition Rules）
+inhibit_rules:
+  - source_match:
+      alertname: 'NodeNetworkDown' # 当网络挂了（源告警触发）
+    target_match:
+      alertname: 'InstanceDown'    # 抑制实例无法访问告警（目标告警被静音）
+    equal: ['node', 'instance']    # 确保是同一个节点上的故障
+
+```
+
+## prometheus operator (AlertmanagerConfig)
