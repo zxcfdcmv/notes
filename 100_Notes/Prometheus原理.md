@@ -36,5 +36,5 @@ Prometheus 将所有数据存储为**时间序列**。每条数据由**指标名
 - Prometheus 内部的**规则引擎**会周期性地执行用户定义好的 PromQL 告警规则（Alerting Rules）。
 - 一旦计算结果触发了阈值（例如：CPU 使用率 > 90% 持续 5 分钟），Prometheus Server 并不会直接发邮件或短信，而是将生成的告警消息**推送给 Alertmanager**。
 ## 5. 告警处理与可视化展示（Alerting & Visualization）
-- **告警投递**：Alertmanager 接收到告警后，进行**去重、分组、静默、抑制**等降噪处理，随后通过路由规则，将告警发送到指定的接收媒介（如 邮件、钉钉、企业微信、PagerDuty 等）。
+- **告警投递**：[[Alertmanager]] 接收到告警后，进行**去重、分组、静默、抑制**等降噪处理，随后通过路由规则，将告警发送到指定的接收媒介（如 邮件、钉钉、企业微信、PagerDuty 等）。
 - **数据可视化**：用户可以使用 Prometheus 自带的 Web UI 进行简单的 PromQL 查询和图表展示，但生产环境中通常会将 Prometheus 作为数据源接入 **Grafana**，配置丰富、炫酷的监控大屏。

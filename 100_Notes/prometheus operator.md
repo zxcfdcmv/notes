@@ -21,7 +21,7 @@ tags:
 ## PodMonitor
 - **作用**：定义 Alertmanager 实例（负责告警的去重、分组和分发）。Operator 会自动将其部署为 `StatefulSet` 并在 Prometheus 中做好关联配置。
 
-## Alertmanager
+## [[Alertmanager]]
 - **作用**：定义 Alertmanager 实例（负责告警的去重、分组和分发）。Operator 会自动将其部署为 `StatefulSet` 并在 Prometheus 中做好关联配置
 
 ## PrometheusRule
