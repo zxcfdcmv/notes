@@ -23,7 +23,7 @@ jobs:
           # 1. 填入所有订阅
           SUBS_ARRAY=(
             "https://d.zrfme.com/vless-base64"
-            "https://raw.githubusercontent.com/snakem982/proxypool/main/source/v2ray-2.txt"
+            # "https://raw.githubusercontent.com/snakem982/proxypool/main/source/v2ray-2.txt"
           )
           
           touch all_decoded_merged.txt
