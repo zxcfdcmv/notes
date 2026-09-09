@@ -1,6 +1,6 @@
 ---
 tags:
-    - 运维/
+    - 运维/prometheus
 ---
 
 > [!note]

@@ -23,18 +23,18 @@ Prometheus 将所有数据存储为**时间序列**。每条数据由**指标名
 ## 1. 指标暴露或中转（Metrics Exposure）
 - **Exporters（采集器）**：针对不支持直接输出 Prometheus 格式的第三方软件（如 MySQL、Redis、Linux 系统等），部署专门的 Exporter 充当代理，收集原生指标并转化为 HTTP 格式暴露出来（默认路径通常是 `/metrics`）。
 - **Client Libraries（客户端库）**：在业务代码中直接集成 Prometheus SDK，自定义埋点输出业务指标。
-- **Pushgateway（推送网关）**：针对生命周期短的定时任务（Ephemeral Jobs），任务结束后便无法被 Pull。因此这类任务会在运行时将数据推送到 Pushgateway，再由 Prometheus Server 从中转站统一 Pull。
+- **Pushgateway（推送网关）**：针对生命周期短的定时任务（Ephemeral Jobs），任务结束后便无法被 Pull。因此这类任务会在运行时将数据推送到 Pushgateway，再由 [[Prometheus Server]] 从中转站统一 Pull。
 ## 2. 目标发现与过滤（Service Discovery & Scrape）
-- Prometheus Server 通过**静态配置**（`static_configs`）或**服务发现**（`Service Discovery`）机制，动态获取当前存活的监控目标列表。
+- [[Prometheus Server]] 通过**静态配置**（`static_configs`）或**服务发现**（`Service Discovery`）机制，动态获取当前存活的监控目标列表。
 - 在拉取之前，利用**重新打标签（Relabeling）**机制，对抓取的目标、标签进行过滤或重构。
 
 ## 3. 数据拉取与存储（Data Scraping & Storage）
-- Prometheus Server 依据设定的时间间隔，向目标组件发送 HTTP GET 请求拉取数据。
+- [[Prometheus Server]] 依据设定的时间间隔，向目标组件发送 HTTP GET 请求拉取数据。
 - 抓取到的时间序列数据会实时写入本地的 **TSDB（时序数据库）** 块中。默认情况下在本地保留 15 天，也可以配置接入远程存储（Remote Storage）实现数据的长期归档。
 
 ## 4. 规则评估与告警触发（Rules Evaluation）
 - Prometheus 内部的**规则引擎**会周期性地执行用户定义好的 PromQL 告警规则（Alerting Rules）。
-- 一旦计算结果触发了阈值（例如：CPU 使用率 > 90% 持续 5 分钟），Prometheus Server 并不会直接发邮件或短信，而是将生成的告警消息**推送给 Alertmanager**。
+- 一旦计算结果触发了阈值（例如：CPU 使用率 > 90% 持续 5 分钟），[[Prometheus Server]] 并不会直接发邮件或短信，而是将生成的告警消息**推送给 [[Alertmanager]]**。
 ## 5. 告警处理与可视化展示（Alerting & Visualization）
 - **告警投递**：[[Alertmanager]] 接收到告警后，进行**去重、分组、静默、抑制**等降噪处理，随后通过路由规则，将告警发送到指定的接收媒介（如 邮件、钉钉、企业微信、PagerDuty 等）。
 - **数据可视化**：用户可以使用 Prometheus 自带的 Web UI 进行简单的 PromQL 查询和图表展示，但生产环境中通常会将 Prometheus 作为数据源接入 **Grafana**，配置丰富、炫酷的监控大屏。
