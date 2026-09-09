@@ -15,12 +15,12 @@ tags:
 - **作用**：定义 [[Prometheus Server]] 实例。
 - **特性**：可以直接在 YAML 中声明副本数（实现高可用）、持久化存储（PVC）、数据保留时间等。Operator 会根据该定义自动创建并管理背后的 `StatefulSet`。
 
-## ServiceMonitor
+## [[ServiceMonitor]]
 - **作用**：**最核心、最常用的组件**，用来定义**如何发现并抓取**一组 Kubernetes Service 的监控指标。
 - **原理**：它通过 `Label Selector`（标签选择器）去匹配集群中的 Service。一旦匹配成功，Prometheus 就会自动将该 Service 后端的 Pod 加入到抓取目标中（Target）。
 
 ## PodMonitor
-- **作用**：与 ServiceMonitor 类似，但它跳过了 Service，直接通过标签匹配和监控底层的 **Pod**（适用于不需要或没有 Service 暴露的 Pod）。
+- **作用**：与 [[ServiceMonitor]] 类似，但它跳过了 Service，直接通过标签匹配和监控底层的 **Pod**（适用于不需要或没有 Service 暴露的 Pod）。
 
 ## [[Alertmanager]]
 - **作用**：定义 [[Alertmanager]] 实例（负责告警的去重、分组和分发）。Operator 会自动将其部署为 `StatefulSet` 并在 Prometheus 中做好关联配置
