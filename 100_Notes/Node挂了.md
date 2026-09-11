@@ -26,3 +26,4 @@ tags:
 - **证书过期：** Kubelet 与 API Server 通信所需的 Kubelet client 证书过期且未自动轮转，导致 API Server 拒绝其心跳。
 - **配置错误或升级失败：** 错误修改了 `kubelet.conf` 配置文件，或者在集群升级时该节点出现版本冲突、污点异常。
 
+# 影响
