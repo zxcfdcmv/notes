@@ -57,16 +57,17 @@ tags:
 - AOF 重写：压缩日志体积（也是 fork 子进程）
 - 4.0 后支持 **混合持久化**：RDB 全量 + AOF 增量
 
+---
 # 高可用与集群
-主从复制
+## 主从复制
 
 - slave 通过 `PSYNC` 从 master 同步数据
 - 支持**全量同步**（RDB）和**增量同步**（replication backlog）
 
-**哨兵（Sentinel）**
+## 哨兵（Sentinel）
 - 监控主从、自动故障转移、通知客户端
 
-**Cluster 集群**
+## Cluster 集群
 - 数据分片：**16384 个哈希槽**，`slot = CRC16(key) % 16384`
 - 去中心化，节点间用 Gossip 协议通信
 - 支持在线扩缩容（槽迁移）
