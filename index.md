@@ -13,16 +13,27 @@ title: zxcfdcmv's Notes
 
 <!-- SerializedQuery END -->
 
+## 公考
+<!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM #MOCs/公考 SORT file.mtime DESC -->
+<!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM #MOCs/公考    SORT file.mtime DESC -->
+
+| File                   | 修改时间                         |
+| ---------------------- | ---------------------------- |
+| [[公考]] | 6:32 PM - September 13, 2026 |
+
+<!-- SerializedQuery END -->
+
 ## 运维
 <!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM #MOCs/运维   SORT file.mtime DESC -->
 <!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM #MOCs/运维   SORT file.mtime DESC -->
 
 | File                                   | 修改时间                         |
 | -------------------------------------- | ---------------------------- |
+| [[Redis]]           | 6:35 PM - September 13, 2026 |
+| [[运维]]                 | 6:33 PM - September 13, 2026 |
 | [[Prometheus]] | 6:13 PM - September 09, 2026 |
 | [[K8S]]               | 6:13 PM - September 09, 2026 |
 | [[050_MOCs/Calico.md\|Calico]]         | 6:13 PM - September 09, 2026 |
-| [[运维]]                 | 6:13 PM - September 09, 2026 |
 
 <!-- SerializedQuery END -->
 
@@ -42,35 +53,29 @@ title: zxcfdcmv's Notes
 <!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM "" WHERE file.mtime >= date(today) - dur(7 days) SORT file.mtime DESC -->
 <!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM "" WHERE file.mtime >= date(today) - dur(7 days) SORT file.mtime DESC -->
 
-| File                                                                  | 修改时间                          |
-| --------------------------------------------------------------------- | ----------------------------- |
-| [[index]]                                                   | 6:21 PM - September 09, 2026  |
-| [[问题]]                                                | 6:20 PM - September 09, 2026  |
-| [[工具]]                                                | 6:14 PM - September 09, 2026  |
-| [[cowyo 剪切板同步]]                             | 6:14 PM - September 09, 2026  |
-| [[Croc 文件传输]]                                 | 6:14 PM - September 09, 2026  |
-| [[Prometheus]]                                | 6:13 PM - September 09, 2026  |
-| [[K8S]]                                              | 6:13 PM - September 09, 2026  |
-| [[050_MOCs/Calico.md\|Calico]]                                        | 6:13 PM - September 09, 2026  |
-| [[运维]]                                                | 6:13 PM - September 09, 2026  |
-| [[k8s中流量走向]]                                   | 6:02 PM - September 09, 2026  |
-| [[ServiceMonitor]]                       | 5:14 PM - September 09, 2026  |
-| [[Prometheus原理]]                           | 5:14 PM - September 09, 2026  |
-| [[Prometheus Server]]                 | 5:14 PM - September 09, 2026  |
-| [[prometheus operator]]             | 5:14 PM - September 09, 2026  |
-| [[Alertmanager]]                           | 5:14 PM - September 09, 2026  |
-| [[监控指标]]                                           | 5:14 PM - September 09, 2026  |
-| [[磁盘空间不足导致的问题都有哪些，如何处理]]           | 4:47 PM - September 03, 2026  |
-| [[k8s中pod运行正常但服务无法访问都可能有啥原因]] | 9:41 AM - September 03, 2026  |
-| [[k8s节点NotReady问题]]                     | 9:39 AM - September 03, 2026  |
-| [[IPIP VXLAN 模式]]                         | 11:19 AM - September 02, 2026 |
-| [[HPA]]                                             | 11:19 AM - September 02, 2026 |
-| [[Deployment]]                               | 11:19 AM - September 02, 2026 |
-| [[CNI插件为pod分配ip]]                         | 11:19 AM - September 02, 2026 |
-| [[100_Notes/Calico.md\|Calico]]                                       | 11:19 AM - September 02, 2026 |
-| [[Calico部署优化]]                               | 11:19 AM - September 02, 2026 |
-| [[BGP模式]]                                         | 11:18 AM - September 02, 2026 |
-| [[云LB]]                                             | 11:18 AM - September 02, 2026 |
+| File                                                      | 修改时间                          |
+| --------------------------------------------------------- | ----------------------------- |
+| [[运维]]                                    | 6:33 PM - September 13, 2026  |
+| [[问题]]                                    | 6:33 PM - September 13, 2026  |
+| [[公考]]                                    | 6:33 PM - September 13, 2026  |
+| [[index]]                                       | 6:33 PM - September 13, 2026  |
+| [[判断推理]]                               | 6:30 PM - September 13, 2026  |
+| [[Redis主从+哨兵]]                   | 1:29 PM - September 13, 2026  |
+| [[Redis原理]]                         | 12:09 PM - September 13, 2026 |
+| [[Node挂了]]                           | 10:06 AM - September 13, 2026 |
+| [[Alertmanager]]               | 6:54 PM - September 09, 2026  |
+| [[工具]]                                    | 6:14 PM - September 09, 2026  |
+| [[cowyo 剪切板同步]]                 | 6:14 PM - September 09, 2026  |
+| [[Croc 文件传输]]                     | 6:14 PM - September 09, 2026  |
+| [[Prometheus]]                    | 6:13 PM - September 09, 2026  |
+| [[K8S]]                                  | 6:13 PM - September 09, 2026  |
+| [[050_MOCs/Calico.md\|Calico]]                            | 6:13 PM - September 09, 2026  |
+| [[k8s中流量走向]]                       | 6:02 PM - September 09, 2026  |
+| [[ServiceMonitor]]           | 5:14 PM - September 09, 2026  |
+| [[Prometheus原理]]               | 5:14 PM - September 09, 2026  |
+| [[Prometheus Server]]     | 5:14 PM - September 09, 2026  |
+| [[prometheus operator]] | 5:14 PM - September 09, 2026  |
+| [[监控指标]]                               | 5:14 PM - September 09, 2026  |
 
 <!-- SerializedQuery END -->
 
