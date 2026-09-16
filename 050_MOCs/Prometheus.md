@@ -7,11 +7,11 @@ tags:
 
 | File                                                      | 修改时间                         |
 | --------------------------------------------------------- | ---------------------------- |
+| [[Alertmanager]]               | 6:54 PM - September 09, 2026 |
 | [[ServiceMonitor]]           | 5:14 PM - September 09, 2026 |
 | [[Prometheus原理]]               | 5:14 PM - September 09, 2026 |
 | [[Prometheus Server]]     | 5:14 PM - September 09, 2026 |
 | [[prometheus operator]] | 5:14 PM - September 09, 2026 |
-| [[Alertmanager]]               | 5:14 PM - September 09, 2026 |
 | [[监控指标]]                               | 5:14 PM - September 09, 2026 |
 
 <!-- SerializedQuery END -->

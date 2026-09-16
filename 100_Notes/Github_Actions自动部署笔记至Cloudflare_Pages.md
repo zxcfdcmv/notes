@@ -9,7 +9,7 @@ tags:
 > - 全站实现无死角的国内 CDN 秒开加速
 > - 完全不消耗 Cloudflare Pages 每月 500 次的构建额度上限
 
-
+---
 # 准备工作（只需配置一次）
 ## 图片自动上传代码仓
 ==obsidian== 中安装 ==notepix== 插件，配好==代码仓分支路径token==等参数
@@ -59,11 +59,14 @@ tags:
     - **Framework preset (框架预设)**：选择 **None**。
     - **Build command (构建命令)**：**留空**（什么都不用填）。
     - **Build output directory (输出目录)**：**填入 `assets`**（注意前面有个斜杠）
-3. **点击保存并部署**：
+3. **点击保存并部署 即可部署成功**
 
 ---
 
 # github actions
+> [!tip] 通过 ==Github Actions== 配置自动推送 ==Cloudflare Pages==
+
+`.github/workflows/deploy_CF.yml`：
 ```yml
 name: Deploy Quartz site to Cloudflare Pages
 
@@ -167,4 +170,6 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
 ```
+
+- 注意修改其中的 ==代码仓库链接== 与 ==cloudflare pages域名==
 
