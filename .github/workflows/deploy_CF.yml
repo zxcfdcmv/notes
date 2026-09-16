@@ -1,0 +1,95 @@
+name: Deploy Quartz site to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  # 移除原本的 pages 和 id-token 权限，因为不再需要写入 GitHub Pages
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 拉取纯笔记仓库（保持所有 Git 历史以确保日期准确）
+      - name: Checkout Notes
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          path: notes
+
+      # 2. 拉取 Quartz v5 框架
+      - name: Checkout Quartz v5 Framework
+        uses: actions/checkout@v4
+        with:
+          repository: jackyzha0/quartz
+          ref: v5
+          path: quartz
+
+      # 3. 组装内容与配置文件
+      - name: Prepare Content and Config
+        run: |
+          # 清空默认内容
+          rm -rf quartz/content/*
+          
+          # 复制笔记，过滤掉不需要编译的仓库文件
+          rsync -av \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='README.md' \
+            --exclude='.gitignore' \
+            --exclude='quartz.config.yaml' \
+            --exclude='ppconfig.json' \
+            notes/ quartz/content/
+          
+          # 覆盖配置文件
+          if [ -f notes/quartz.config.yaml ]; then
+            cp notes/quartz.config.yaml quartz/
+          else
+            echo "Error: quartz.config.yaml not found!"
+            exit 1
+          fi
+
+      # 4. 设置 Node 环境
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+          cache-dependency-path: quartz/package-lock.json
+
+      # 5. 安装核心依赖
+      - name: Install dependencies
+        run: |
+          cd quartz
+          npm ci --legacy-peer-deps
+
+      # 6. 提前显式安装默认主题包，防止 build 过程中动态加载死锁
+      - name: Pre-install Default Theme
+        run: |
+          cd quartz
+          npm install @quartz-themes/default --no-save
+
+      # 7. 根据 YAML 配置安装其他社区插件
+      - name: Install Quartz plugins
+        run: |
+          cd quartz
+          npx quartz plugin install --from-config
+
+      # 8. 执行编译
+      - name: Build Quartz
+        run: |
+          cd quartz
+          npx quartz build
+
+      # 9. 将编译好的静态文件上传到 Cloudflare Pages
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: "zxcfdcmv-notes" # 填入在 Cloudflare Pages 创建的项目名
+          directory: "quartz/public"  # Quartz 编译出来的静态文件目录
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
