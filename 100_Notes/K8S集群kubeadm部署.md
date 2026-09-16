@@ -1,3 +1,8 @@
+---
+tags:
+    - 运维/K8S
+---
+
 > [!tip]
 > **利用容器化技术来部署 K8s 的核心组件**（除了 `kubelet` 和容器运行时在宿主机运行，`kube-apiserver`、`etcd` 等都作为 Pod 运行）
 
