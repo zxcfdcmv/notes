@@ -106,13 +106,20 @@ kubeadm join 192.168.1.10:6443 --token xxxxx --discovery-token-ca-cert-hash sha2
 > [!warning] 问题1
 > Token 过期了怎么办？怎么让新节点加入?
 
-> [!success]-
+> [!success]- 回答1
 `kubeadm init` 生成的 Token 默认只有 **24 小时** 有效期。如果以后要扩容节点，需要在 Master 上执行 `kubeadm token create --print-join-command`，它会重新动态生成一条带新 Token 的 join 命令。
 
-## 什么是 Cgroup Driver 冲突？你怎么解决的?
-这是部署时最容易踩的坑。Linux 有两种 Cgroup 管理器：`cgroupfs` 和 `systemd`。K8s 官方强烈推荐在生产中全部统一使用 **`systemd`**。我们需要确保 **容器运行时（containerd）** 的 `SystemdCgroup = true`，同时 **kubelet** 也会默认使用 systemd。如果两者不一致，kubelet 就会崩溃
-## kubeadm 部署的集群，Master 节点高可用（HA）怎么做?
-不能直接用上述的单机 init。如果是多 Master 高可用，需要：
-- 提前搭建 **Keepalived + HAProxy**（或者使用云厂商的内网负载均衡器 SLB），挂载一个虚拟 VIP（比如 `192.168.1.100:6443`）。
-- 在 `kubeadm init` 时，加上 `--control-plane-endpoint "192.168.1.100:6443"` 参数。
-- 其他 Master 节点加入时，使用 `kubeadm join ... --control-plane` 命令加入，从而实现控制平面的多活高可用。
+> [!warning] 问题2
+> 什么是 Cgroup Driver 冲突？你怎么解决的?
+
+> [!success]- 回答2
+> 这是部署时最容易踩的坑。Linux 有两种 Cgroup 管理器：`cgroupfs` 和 `systemd`。K8s 官方强烈推荐在生产中全部统一使用 **`systemd`**。我们需要确保 **容器运行时（containerd）** 的 `SystemdCgroup = true`，同时 **kubelet** 也会默认使用 systemd。如果两者不一致，kubelet 就会崩溃
+
+> [!warning] 问题3 
+> kubeadm 部署的集群，Master 节点高可用（HA）怎么做?
+
+> [!success]- 回答3
+> 不能直接用上述的单机 init。如果是多 Master 高可用，需要：
+> - 提前搭建 **Keepalived + HAProxy**（或者使用云厂商的内网负载均衡器 SLB），挂载一个虚拟 VIP（比如 `192.168.1.100:6443`）。
+> - 在 `kubeadm init` 时，加上 `--control-plane-endpoint "192.168.1.100:6443"` 参数。
+> - 其他 Master 节点加入时，使用 `kubeadm join ... --control-plane` 命令加入，从而实现控制平面的多活高可用。
