@@ -81,7 +81,7 @@ jobs:
       # 7.5 自动将所有笔记中的 GitHub 原始图床链接，替换为专用 Cloudflare Pages 图片站域名
       - name: Optimize Image Links for Cloudflare CDN
         run: |
-          find quartz/content -type f -name "*.md" -exec sed -i 's|https://raw.githubusercontent.com|https://notes-beh.pages.dev|g' {} +
+          find quartz/content -type f -name "*.md" -exec sed -i 's|https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/|https://notes-beh.pages.dev/|g' {} +
 
       # 8. 执行编译
       - name: Build Quartz
