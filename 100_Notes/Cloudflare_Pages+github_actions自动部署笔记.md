@@ -3,13 +3,65 @@ tags:
     - 工具
 ---
 
-> [!note]
+> [!tip]
 > - 网页走 Cloudflare 托管
 > - 图片走 Cloudflare 静态图片站托管
-> - 全站实现无死角的国内 CDN 骨干网秒开加速
+> - 全站实现无死角的国内 CDN 秒开加速
+> - 完全不消耗 Cloudflare Pages 每月 500 次的构建额度上限
 
 
+# 准备工作（只需配置一次）
+## 图片自动上传代码仓
+==obsidian== 中安装 ==notepix== 插件，配好==代码仓分支路径token==等参数
+笔记中==粘贴图片==会自动上传代码仓，并且会直接将图片修改为 ==github== 的 ==raw 链接==
 
+## 配置笔记项目
+> 为了让 GitHub 有权限把文件上传到 Cloudflare 账户，需要去两边后台拿一下密钥并配置到 GitHub 仓库里
+
+1. 获取 Cloudflare 账户 ID (Account ID)
+
+- 登录 Cloudflare 控制台，点击右侧的 **"Workers & Pages" (Workers 和 Pages)**。
+- 在右侧边栏，你会看到一串由 32 位字母和数字组成的 **Account ID**，把它复制下来。
+
+2. 创建 Cloudflare 创建 API 令牌 (API Token)
+
+- 点击 Cloudflare 右上角的用户头像 -> **My Profile (我的个人资料)** -> **API Tokens (API 令牌)**。
+- 点击 **Create Token (创建令牌)** -> 选择最下方的 **Create Custom Token (创建自定义令牌)**。
+- **令牌名称**：比如叫 `GitHub-Actions-Pages`。
+
+- **权限配置 (Permissions)**：
+    - 选择：`Account` (账户) -> `Cloudflare Pages` -> `Edit` (编辑)
+- 点击下一步并生成，**复制生成的这一长串 API 令牌**（它只会出现一次，注意保存）。
+
+3. 将密钥填入 GitHub 仓库
+
+- 打开你存放笔记的 GitHub 仓库，进入 **Settings** -> **Secrets and variables** -> **Actions**。
+- 点击 **New repository secret**，分别添加以下两个变量：
+    - 名字填 `CLOUDFLARE_ACCOUNT_ID`，内容填你的账户 ID。
+    - 名字填 `CLOUDFLARE_API_TOKEN`，内容填你的 API 令牌。
+
+4. 在 Cloudflare 创建一个空白项目
+
+- 回到 Cloudflare 的 **Workers & Pages** 页面。
+- 点击 **Create** -> **Pages** -> 选择 **Upload assets (上传资源)**。
+- 给项目起一个名字（比如 `my-quartz-blog`），然后点击创建即可（不需要手动上传任何文件，点击完成后直接退出）。
+- 将这个名字填入上面 YAML 脚本第 9 步的 `projectName: "你的CF项目名称"` 处。
+
+
+## 配置图片加速项目
+
+1. **创建并选择仓库**：
+    - 登录 Cloudflare，进入 **Workers & Pages** -> 点击 **Create** -> 选择 **Pages** -> 点击 **Connect to Git**。
+    - 选中 **`notes`** 仓库。
+2. **构建设置（微调这里）**：
+    - **Production branch (生产分支 / 默认分支)**：**必须从 `main` 改成 `images`**。这样 Cloudflare 才会去读取存放图片的分支。
+    
+    - **Framework preset (框架预设)**：选择 **None**。
+    - **Build command (构建命令)**：**留空**（什么都不用填）。
+    - **Build output directory (输出目录)**：**填入 `assets`**（注意前面有个斜杠）
+3. **点击保存并部署**：
+
+---
 
 # github actions
 ```yml
