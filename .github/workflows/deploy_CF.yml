@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: read
-  # 移除原本的 pages 和 id-token 权限，因为不再需要写入 GitHub Pages
+  deployments: write
 
 jobs:
   build:
