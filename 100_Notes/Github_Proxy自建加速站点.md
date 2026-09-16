@@ -2,9 +2,16 @@
 tags:
     - 工具
 ---
-> 部署
+> [!tip] 部署 ==gh-proxy== 到 ==Cloudflare Pages== 上
 
+==步骤==：
+- 在本地创建一个空文件夹，新建一个名为 `_worker.js` 的文件。
+- 把 hunsh 的 `gh-proxy` 代码全部黏贴进这个 `_worker.js` 里并保存。
+    
+- 登录 Cloudflare 控制台，进入 **Workers & Pages** -> 点击 **Create** -> 选择 **Pages** -> 选择 **Upload assets (上传资源)**。
+- 创建项目，直接把这个含有 `_worker.js` 的文件夹拖拽上传部署。
 
+`_worker.js`：
 ```js
 'use strict'
 
