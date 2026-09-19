@@ -89,12 +89,20 @@ jobs:
           cd quartz
           npx quartz build
 
-      # 9. 将编译好的静态文件上传到 Cloudflare Pages
+      # # 9. 将编译好的静态文件上传到 Cloudflare Pages
+      # - name: Publish to Cloudflare Pages
+      #   uses: cloudflare/pages-action@v1
+      #   with:
+      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      #     accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      #     projectName: "zxcfdcmv-notes" # 填入在 Cloudflare Pages 创建的项目名
+      #     directory: "quartz/public"  # Quartz 编译出来的静态文件目录
+      #     gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: "zxcfdcmv-notes" # 填入在 Cloudflare Pages 创建的项目名
-          directory: "quartz/public"  # Quartz 编译出来的静态文件目录
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy quartz/public --project-name=zxcfdcmv-notes
