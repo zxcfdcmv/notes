@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'npm'
 
       # 3. 安装依赖并编译前端代码（【避坑】新版项目推荐这里直接用 npm install，它会顺带触发内置的打包逻辑）
