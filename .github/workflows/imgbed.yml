@@ -31,7 +31,7 @@ jobs:
       - name: Initialize D1 Database Structure
         run: |
           if [ -f "./database/init.sql" ]; then
-            npx wrangler d1 execute imgbed --remote --file=./database/init.sql --yes
+            npx wrangler d1 execute img_d1 --remote --file=./database/init.sql --yes
           else
             echo "SQL file not found, skipping DB init."
           fi
