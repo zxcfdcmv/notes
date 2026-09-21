@@ -9,7 +9,7 @@ title: zxcfdcmv's Notes
 
 | File                   | 修改时间                         |
 | ---------------------- | ---------------------------- |
-| [[工具]] | 6:21 PM - September 16, 2026 |
+| [[工具]] | 7:47 PM - September 16, 2026 |
 
 <!-- SerializedQuery END -->
 
@@ -27,13 +27,13 @@ title: zxcfdcmv's Notes
 <!-- QueryToSerialize: TABLE file.mtime AS 修改时间 FROM #MOCs/运维   SORT file.mtime DESC -->
 <!-- SerializedQuery: TABLE file.mtime AS 修改时间 FROM #MOCs/运维   SORT file.mtime DESC -->
 
-| File                                   | 修改时间                         |
-| -------------------------------------- | ---------------------------- |
-| [[Redis]]           | 6:21 PM - September 16, 2026 |
-| [[Prometheus]] | 6:21 PM - September 16, 2026 |
-| [[K8S]]               | 6:21 PM - September 16, 2026 |
-| [[运维]]                 | 6:21 PM - September 16, 2026 |
-| [[050_MOCs/Calico.md\|Calico]]         | 6:13 PM - September 09, 2026 |
+| File                                   | 修改时间                          |
+| -------------------------------------- | ----------------------------- |
+| [[运维]]                 | 10:34 AM - September 21, 2026 |
+| [[Redis]]           | 6:21 PM - September 16, 2026  |
+| [[Prometheus]] | 6:21 PM - September 16, 2026  |
+| [[K8S]]               | 6:21 PM - September 16, 2026  |
+| [[050_MOCs/Calico.md\|Calico]]         | 6:13 PM - September 09, 2026  |
 
 <!-- SerializedQuery END -->
 
@@ -55,13 +55,16 @@ title: zxcfdcmv's Notes
 
 | File                                                                                          | 修改时间                          |
 | --------------------------------------------------------------------------------------------- | ----------------------------- |
-| [[index]]                                                                           | 6:21 PM - September 16, 2026  |
+| [[index]]                                                                           | 10:34 AM - September 21, 2026 |
+| [[运维]]                                                                        | 10:34 AM - September 21, 2026 |
+| [[简历问题]]                                                                   | 10:30 AM - September 21, 2026 |
+| [[速算技巧]]                                                                   | 8:47 PM - September 20, 2026  |
+| [[工具]]                                                                        | 7:47 PM - September 16, 2026  |
+| [[Github_Proxy自建加速站点]]                                       | 7:47 PM - September 16, 2026  |
 | [[Redis]]                                                                  | 6:21 PM - September 16, 2026  |
 | [[Prometheus]]                                                        | 6:21 PM - September 16, 2026  |
 | [[K8S]]                                                                      | 6:21 PM - September 16, 2026  |
-| [[运维]]                                                                        | 6:21 PM - September 16, 2026  |
 | [[公考]]                                                                        | 6:21 PM - September 16, 2026  |
-| [[工具]]                                                                        | 6:21 PM - September 16, 2026  |
 | [[Github_Actions自动部署笔记至Cloudflare_Pages]] | 6:20 PM - September 16, 2026  |
 | [[类比推理]]                                                                   | 4:09 PM - September 16, 2026  |
 | [[图形推理空间类]]                                                             | 3:24 PM - September 16, 2026  |
@@ -69,19 +72,6 @@ title: zxcfdcmv's Notes
 | [[K8S集群kubeadm部署]]                                               | 11:19 AM - September 16, 2026 |
 | [[图形推理平面类]]                                                             | 9:12 PM - September 14, 2026  |
 | [[Redis主从+哨兵]]                                                       | 9:33 AM - September 14, 2026  |
-| [[问题]]                                                                        | 6:33 PM - September 13, 2026  |
-| [[Redis原理]]                                                             | 12:09 PM - September 13, 2026 |
-| [[Node挂了]]                                                               | 10:06 AM - September 13, 2026 |
-| [[Alertmanager]]                                                   | 6:54 PM - September 09, 2026  |
-| [[cowyo 剪切板同步]]                                                     | 6:14 PM - September 09, 2026  |
-| [[Croc 文件传输]]                                                         | 6:14 PM - September 09, 2026  |
-| [[050_MOCs/Calico.md\|Calico]]                                                                | 6:13 PM - September 09, 2026  |
-| [[k8s中流量走向]]                                                           | 6:02 PM - September 09, 2026  |
-| [[ServiceMonitor]]                                               | 5:14 PM - September 09, 2026  |
-| [[Prometheus原理]]                                                   | 5:14 PM - September 09, 2026  |
-| [[Prometheus Server]]                                         | 5:14 PM - September 09, 2026  |
-| [[prometheus operator]]                                     | 5:14 PM - September 09, 2026  |
-| [[监控指标]]                                                                   | 5:14 PM - September 09, 2026  |
 
 <!-- SerializedQuery END -->
 
