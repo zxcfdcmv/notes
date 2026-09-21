@@ -52,7 +52,7 @@ tags:
 ## 假设增量求后期
 > [!note] 求出X，根据“B = A + nX”列不等式即可
 
-
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260921T112818736Z.png)
 ## 假设增速求后期
 > [!note] 利用公式“B = A + AR”依次求出后一年，一般两到三次即可求得答案
 
