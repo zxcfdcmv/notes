@@ -37,3 +37,5 @@ tags:
 
 ## 间隔基期
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260921T095031883Z.png)
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260921T110008913Z.png)
