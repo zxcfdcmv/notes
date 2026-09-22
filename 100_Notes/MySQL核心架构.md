@@ -67,3 +67,38 @@ tags:
 
 
 ## InnoDB
+> [!note] 完美支持 **ACID 事务特性**、提供了**行级锁**，并具备高可靠的**崩溃恢复（Crash-safe）能力**
+
+### 内存结构
+> [!note] 由于磁盘 I/O 性能较低，InnoDB 绝大部分数据的读写和修改都在内存中进行。
+
+#### 缓冲池 (Buffer Pool)
+Buffer Pool 是 InnoDB **最核心的内存区域**（通常建议占用服务器 60%~80% 的内存）。
+
+- **页（Page）**：InnoDB 与磁盘交互的最小单位是“页”，默认 **16KB**。Buffer Pool 缓存了大量的索引页数据和数据页。
+    
+- **读写加速**：
+    
+    - **读数据**：优先看 Buffer Pool 里有没有，有就直接返回（命中缓存）；没有就从磁盘加载到 Buffer Pool 再返回。
+    - **写数据**：直接修改 Buffer Pool 中的页。被修改后与磁盘不一致的页称为 **“脏页”（Dirty Page）**。脏页由后台线程异步刷入磁盘（CheckPoint 机制）。
+    
+- **内存管理（LRU 链表）**：InnoDB 对经典 LRU 算法进行了改进（分为 New Sublist 和 Old Sublist），防止全表扫描时把热点数据挤出内存。
+
+#### 写缓冲区 (Change Buffer)
+- **作用**：针对 **非唯一二级索引（Secondary Index）** 的写优化。
+- **原理**：当执行 `INSERT` 或 `UPDATE` 时，如果对应的二级索引页不在 Buffer Pool 中，InnoDB 不会立刻从磁盘读入该页，而是将修改记录在 Change Buffer 中。当后续该页被读取时，再将修改 **Merge（合并）** 进去。这避免了大量随机磁盘 I/O。
+
+
+#### 日志缓冲区 (Log Buffer)
+- **作用**：用来缓存即将写入 **Redo Log** 的内存区域，默认 16MB。
+- **策略**：事务提交或每隔 1 秒，Log Buffer 中的内容会刷入磁盘的 Redo Log 文件中（由 `innodb_flush_log_at_trx_commit` 参数控制）。
+
+
+### 磁盘结构
+#### 表空间 (Tablespaces)
+- **系统表空间 (System Tablespace)**：包含 InnoDB 数据字典、双写缓冲区等。默认对应磁盘上的 `ibdata1` 文件。
+- **独立表空间 (File-Per-Table Tablespace)**：开启 `innodb_file_per_table`（默认开启）后，每张表会拥有一个独立的 `表名.ibd` 文件，存放该表的**数据、索引和插入缓冲**。
+
+#### 双写缓冲区 (Doublewrite Buffer)
+- **解决痛点——页断裂（Partial Page Write）**：Linux 文件系统的一页通常是 4KB，而 InnoDB 一页是 16KB。当数据库正在往磁盘写 16KB 的页时，如果服务器突然断电，可能只写了 4KB，导致**数据页损坏且无法通过 Redo Log 修复**。
+- **原理**：脏页在刷盘前，会先**顺序写**到磁盘的 Doublewrite Buffer 副本中，然后再写入实际的 `.ibd` 数据文件。如果写 `.ibd` 时崩溃，可以通过 Doublewrite Buffer 找到完整页进行恢复。
