@@ -52,9 +52,9 @@ tags:
 - **插件式架构**：MySQL 支持多种存储引擎，它们都实现了相同的 API 接口。Server 层不关心底层数据怎么存，只通过接口收发数据。
 - **核心引擎**：
 
-    - **InnoDB**：MySQL 5.5.5 版本开始的**默认存储引擎**。全面支持事务（ACID）、行级锁、外键以及崩溃恢复能力，是绝大多数业务的首选。
-    - **MyISAM**：早期的默认引擎。不支持事务，只支持表级锁，但读取速度快，占用资源少，目前极少在核心业务中使用。
-    - **Memory**：数据全部存放在内存中，读写速度极快，但断电后数据会全部丢失，常用于临时表。
+    - **==InnoDB==**：MySQL 5.5.5 版本开始的**默认存储引擎**。全面支持事务（ACID）、行级锁、外键以及崩溃恢复能力，是绝大多数业务的首选。
+    - **==MyISAM==**：早期的默认引擎。不支持事务，只支持表级锁，但读取速度快，占用资源少，目前极少在核心业务中使用。
+    - **==Memory==**：数据全部存放在内存中，读写速度极快，但断电后数据会全部丢失，常用于临时表。
 
 |对比维度|InnoDB|MyISAM|
 |---|---|---|
@@ -107,7 +107,7 @@ Buffer Pool 是 InnoDB **最核心的内存区域**（通常建议占用服务�
 #### Redo Log（重做日志）
 > [!note] 保证持久性（Durability）
 
-- **WAL 技术（Write-Ahead Logging，日志先行）**：在修改页之前，必须先把修改行为记录到 Redo Log 中并刷盘，才算事务提交成功。
+- **==WAL 技术==（Write-Ahead Logging，日志先行）**：在修改页之前，必须先把修改行为记录到 Redo Log 中并刷盘，才算事务提交成功。
 - **顺序 IO vs 随机 IO**：修改数据页是磁盘随机 I/O（极慢），而追加 Redo Log 是磁盘**顺序 I/O**（极快）。
 - **崩溃恢复**：如果系统断电，Buffer Pool 中的脏页丢失了，重启时 InnoDB 会读取磁盘上的 Redo Log，把没有来得及刷盘的改动“重做”一遍。
 
@@ -120,7 +120,7 @@ Buffer Pool 是 InnoDB **最核心的内存区域**（通常建议占用服务�
 ### 后台线程
 > InnoDB 内部有一组常驻的后台线程，负责调度和清理工作
 
-- **Master Thread**：核心主线程，负责异步将缓冲池中的数据刷到磁盘，包括脏页刷新、合并 Change Buffer 等。
-- **IO Thread**：负责处理 AIO（异步I/O）请求。包含 Read Thread、Write Thread、Log Thread。
-- **Purge Thread**：事务提交后，其使用的 Undo Log 就没有用了。Purge 线程负责回收这些已经无用的 Undo Log 页面。
-- **Page Cleaner Thread**：专门负责脏页的刷新工作，减轻 Master Thread 的压力，提高并发性能
+- **==Master Thread==**：核心主线程，负责异步将缓冲池中的数据刷到磁盘，包括脏页刷新、合并 Change Buffer 等。
+- **==IO Thread==**：负责处理 AIO（异步I/O）请求。包含 Read Thread、Write Thread、Log Thread。
+- **==Purge Thread==**：事务提交后，其使用的 Undo Log 就没有用了。Purge 线程负责回收这些已经无用的 Undo Log 页面。
+- **==Page Cleaner Thread==**：专门负责脏页的刷新工作，减轻 Master Thread 的压力，提高并发性能
