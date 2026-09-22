@@ -65,3 +65,10 @@ tags:
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260922T041110953Z.png)
 
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260922T041154397Z.png)
+
+
+# 增长量X
+> [!note] 
+> 一般增长量（求X）：R靠近某分数可使用415份数法，R极小可直接BR，其他可假设分配；  
+两期增长量倍数或比值（X₁/X₂）：依次求得X₁、X₂，再求比值即可；  
+整体增量/部分增量（X = X₁ + X₂ + X₃…）：各部分增量相加等于总增量。
