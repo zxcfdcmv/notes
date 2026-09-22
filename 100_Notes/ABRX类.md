@@ -56,6 +56,6 @@ tags:
 ## 假设增速求后期
 > [!note] 利用公式“B = A + AR”依次求出后一年，一般两到三次即可求得答案
 
-
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260922T034042256Z.png)
 ## 按照实际增长率求现期
 > [!note] 根据名义增长率求得基期后，再利用实际增长率求后期
