@@ -102,3 +102,25 @@ Buffer Pool 是 InnoDB **最核心的内存区域**（通常建议占用服务�
 #### 双写缓冲区 (Doublewrite Buffer)
 - **解决痛点——页断裂（Partial Page Write）**：Linux 文件系统的一页通常是 4KB，而 InnoDB 一页是 16KB。当数据库正在往磁盘写 16KB 的页时，如果服务器突然断电，可能只写了 4KB，导致**数据页损坏且无法通过 Redo Log 修复**。
 - **原理**：脏页在刷盘前，会先**顺序写**到磁盘的 Doublewrite Buffer 副本中，然后再写入实际的 `.ibd` 数据文件。如果写 `.ibd` 时崩溃，可以通过 Doublewrite Buffer 找到完整页进行恢复。
+
+### 事务崩溃恢复原理
+#### Redo Log（重做日志）
+> [!note] 保证持久性（Durability）
+
+- **WAL 技术（Write-Ahead Logging，日志先行）**：在修改页之前，必须先把修改行为记录到 Redo Log 中并刷盘，才算事务提交成功。
+- **顺序 IO vs 随机 IO**：修改数据页是磁盘随机 I/O（极慢），而追加 Redo Log 是磁盘**顺序 I/O**（极快）。
+- **崩溃恢复**：如果系统断电，Buffer Pool 中的脏页丢失了，重启时 InnoDB 会读取磁盘上的 Redo Log，把没有来得及刷盘的改动“重做”一遍。
+
+#### Undo Log（回滚日志）
+> [!note] 保证原子性（Atomicity）与 MVCC
+
+- **事务回滚**：记录的是逻辑反向日志。当你 `INSERT` 一条记录，Undo Log 就会记录一条对应的 `DELETE`；当你 `UPDATE`，它记录修改前的值。如果事务失败或执行了 `ROLLBACK`，就执行反向操作。
+- **MVCC（多版本并发控制）**：Undo Log 会形成一个 **“版本链”**。当 A 事务正在修改某行，B 事务来读取时，B 事务可以通过 Undo Log 链条读取到修改前的历史版本（快照读），从而实现**读写不冲突**。
+
+### 后台线程
+> InnoDB 内部有一组常驻的后台线程，负责调度和清理工作
+
+- **Master Thread**：核心主线程，负责异步将缓冲池中的数据刷到磁盘，包括脏页刷新、合并 Change Buffer 等。
+- **IO Thread**：负责处理 AIO（异步I/O）请求。包含 Read Thread、Write Thread、Log Thread。
+- **Purge Thread**：事务提交后，其使用的 Undo Log 就没有用了。Purge 线程负责回收这些已经无用的 Undo Log 页面。
+- **Page Cleaner Thread**：专门负责脏页的刷新工作，减轻 Master Thread 的压力，提高并发性能
