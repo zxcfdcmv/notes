@@ -86,7 +86,9 @@ tags:
 # 增长率R
 
 ## 一般增长率
-> [!tip] 直接套用公式“==R = X/A = (B-A)/A==”即可；  
+> [!tip] 直接套用公式“==R = X/A = (B-A)/A==”即可
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260922T101427562Z.png)
 ## 间隔增长率
 > [!tip] 已知今年较去年增长R₁，去年较前年增长R₂，则今年较前年增长“==R₁+R₂+R₁R₂==”；  
 ## 比值增长率
