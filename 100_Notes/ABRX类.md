@@ -61,3 +61,7 @@ tags:
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260922T035200412Z.png)
 ## 按照实际增长率求现期
 > [!note] 根据名义增长率求得基期后，再利用实际增长率求后期
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260922T041110953Z.png)
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260922T041154397Z.png)
