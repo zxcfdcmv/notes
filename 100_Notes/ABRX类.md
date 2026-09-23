@@ -112,5 +112,7 @@ tags:
 
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T090628617Z.png)
 
+![[ABRX类-1.png]]
+
 ## 乘积增长率
 > [!tip] 符合表达式A = B×C，材料中B的增长率为R₁、C的增长率为R₂，求A的增长率，即为乘积增长率（多以实际含义关系式和部分增长率形式出现），公式为“==R₁+R₂+R₁R₂==”；
