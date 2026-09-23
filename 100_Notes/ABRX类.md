@@ -114,19 +114,19 @@ tags:
 
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T100209325Z.png)
 
-![[ABRX类-2.png]]
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T121103887Z.png)
 
-![[ABRX类-1.png]]
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T121036478Z.png)
 
 ### 特殊比值增长率
-![[ABRX类-3.png]]
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T121129003Z.png)
 
-![[ABRX类-5.png]]
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T121206742Z.png)
 
-![[ABRX类-4.png]]
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T121148033Z.png)
 
 ### 比值倍数
-![[ABRX类-6.png]]
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T121222124Z.png)
 
 ## 乘积增长率
 > [!tip] 符合表达式A = B×C，材料中B的增长率为R₁、C的增长率为R₂，求A的增长率，即为乘积增长率（多以实际含义关系式和部分增长率形式出现），公式为“==R₁+R₂+R₁R₂==”；
