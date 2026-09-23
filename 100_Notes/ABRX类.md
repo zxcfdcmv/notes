@@ -93,6 +93,12 @@ tags:
 > [!tip] 已知今年较去年增长R₁，去年较前年增长R₂，则今年较前年增长“==R₁+R₂+R₁R₂==”；
 
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T081540040Z.png)
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T082730619Z.png)
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T083014476Z.png)
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260923T083354686Z.png)
 ## 比值增长率
 > [!tip] 符合表达式A = B/C，材料中B的增长率为R₁、C的增长率为R₂，求A的增长率，即为比值增长率（多以平均数增长率形式出现），公式为“==R1−R21+R21+R2​R1​−R2​​==”；  
 
