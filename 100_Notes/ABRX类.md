@@ -138,3 +138,6 @@ tags:
    ==出口额 = 出口量 × 单价==
    ==月产量 = 日均产量 × 天数== 等
 2. ==部分 = 整体 × 占比==（尤其注意材料里有某部分占比的图表）
+
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260924T031613837Z.png)
