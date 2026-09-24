@@ -7,6 +7,7 @@ tags:
 > 本方案实现了**电脑（Linux/NixOS）**与**手机（Android）**之间的双向、无缝、静默剪切板同步。
 > - ⚡ **核心特性**：无第三方闭源服务、全轻量化处理、静默运行无弹窗阻碍、支持双向选区同步。
 
+---
 # 服务端
 > 作为数据中转站，利用 Cloudflare KV 存储文本。未找到文本时返回 `404` 状态码，保持数据纯净。
 
@@ -32,7 +33,7 @@ export default {
 };
 ```
 
-
+---
 # PC端
 > [!note]
 > - **my-copy**：抓取本地剪切板并静默推送到云端。
@@ -57,7 +58,8 @@ NixOS配置脚本：
 - 注意更换链接
 - 配合窗口管理器绑定按键
 
-# 安装端
+---
+# 安卓端
 > [!note] 
 > 通过安卓端 `HTTP Shortcuts` 软件实现一键同步，并将触发器放入**下拉通知栏快捷开关（Quick Settings Tiles）**中。(当然也能通过`termux`脚本)
 
@@ -78,4 +80,6 @@ NixOS配置脚本：
     copyToClipboard(response.body);
     showToast("已同步到手机剪切板");
     ```
+
+## 可直接导入配置
 https://imgbed-5fd.pages.dev/file/files/1790238348714_http_shortcuts.zip
