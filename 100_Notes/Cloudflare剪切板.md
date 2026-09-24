@@ -65,14 +65,14 @@ NixOS配置脚本：
 
 ## 动作一：手机同步到云端 (copy)
 - **Method**: `POST`
-- **URL**: `https://pages.dev`
-- **Request Body Type**: `Text / Custom Expression`
+- **URL**: `https://paste-6bw.pages.dev/zxcfdcmv`
+- **Request Body Type**: 不填
 - **Body Content**: 点击右侧变量图标选择 **`{clipboard}`**
 
 ## 动作二：云端同步到手机 (paste)
 
 - **Method**: `GET`
-- **URL**: `https://pages.dev`
+- **URL**: `https://paste-6bw.pages.dev/zxcfdcmv`
 - **Response Display**: 选择 `No display (run in background)` (后台静默)
 - **Scripting -> Run on Success (成功后运行)**:
     
