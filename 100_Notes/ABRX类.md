@@ -141,3 +141,5 @@ tags:
 
 
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260924T031613837Z.png)
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260924T062831865Z.png)
