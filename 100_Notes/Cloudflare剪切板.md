@@ -61,6 +61,12 @@ NixOS配置脚本：
 > [!note] 
 > 通过安卓端 `HTTP Shortcuts` 软件实现一键同步，并将触发器放入**下拉通知栏快捷开关（Quick Settings Tiles）**中。(当然也能通过`termux`脚本)
 
+## 动作一：手机同步到云端 (copy)
+- **Method**: `POST`
+- **URL**: `https://pages.dev`
+- **Request Body Type**: `Text / Custom Expression`
+- **Body Content**: 点击右侧变量图标选择 **`{clipboard}`**
+
 ## 动作二：云端同步到手机 (paste)
 
 - **Method**: `GET`
