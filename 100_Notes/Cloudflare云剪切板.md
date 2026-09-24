@@ -11,41 +11,41 @@ tags:
 # 服务端
 > 作为数据中转站，利用 Cloudflare KV 存储文本。未找到文本时返回 `404` 状态码，保持数据纯净。
 
-1. 在本地的一个目录下新建文件`_worker.js`：
-    ```js
-    export default {
-      async fetch(request, env) {
-        const room = new URL(request.url).pathname.split('/').filter(Boolean)[0];
-        if (!room) return new Response(null, { status: 400 });
-    
-        if (request.method === "GET") {
-          const text = await env.CLIPBOARD_KV.get(room);
-          return new Response(text, { status: text ? 200 : 404 });
-        }
-    
-        if (request.method === "POST") {
-          await env.CLIPBOARD_KV.put(room, await request.text(), { expirationTtl: 86400 });
-          return new Response(null, { status: 200 });
-        }
-    
-        return new Response(null, { status: 405 });
-      }
-    };
-    ```
+在本地的一个目录下新建文件`_worker.js`：
+```js
+export default {
+  async fetch(request, env) {
+    const room = new URL(request.url).pathname.split('/').filter(Boolean)[0];
+    if (!room) return new Response(null, { status: 400 });
 
+    if (request.method === "GET") {
+      const text = await env.CLIPBOARD_KV.get(room);
+      return new Response(text, { status: text ? 200 : 404 });
+    }
+
+    if (request.method === "POST") {
+      await env.CLIPBOARD_KV.put(room, await request.text(), { expirationTtl: 86400 });
+      return new Response(null, { status: 200 });
+    }
+
+    return new Response(null, { status: 405 });
+  }
+};
+```
+
+## cloudflare中
 1. **新建 KV 空间**：
     - 登录 Cloudflare 后台，点击左侧菜单的 **KV**。
     - 点击 **Create a namespace**（创建命名空间），名字填 `CLIPBOARD_KV`。
 2. **创建 Pages 项目**：
-    - 本地电脑新建一个文件夹，里面建一个 `functions` 文件夹，再在里面建一个 `[[path]].js`，把上面的代码粘进去。整个项目只需这一个文件。
-    - 进入 Cloudflare 后台 -> **Workers & Pages** -> **Create** -> 选择 **Pages** -> **Upload assets**（直接拖拽上传文件夹）。
-    - 随便起个项目名，把包含 `functions` 的文件夹拖进去上传。
+    - 进入 Cloudflare 后台 -> **Workers & Pages** -> **Create** -> 选择 **Pages** -> 起个项目名 -> **Upload assets**（上传上边的文件夹）-> 部署。
+
 3. **绑定 KV 变量（关键步骤）**：
     - 部署完成后，进入该 Pages 项目的后台，点击 **Settings（设置）** -> **Functions（函数）**。
     - 往下滚动找到 **KV namespace bindings（KV 命名空间绑定）**。
     - 点击 **Add binding（添加绑定）**：
         - **Variable name（变量名称）**：严格填写 `CLIPBOARD_KV`
-        - **KV namespace**：选择你在第一步创建的那个 KV 空间。
+        - **KV namespace**：选择在第一步创建的那个 KV 空间。
     - **保存并重新部署一次**（或者随便去后台点一下重新触发部署），让绑定生效。
 
 ---
