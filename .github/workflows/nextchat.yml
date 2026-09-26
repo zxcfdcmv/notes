@@ -37,9 +37,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # 替换为你在 Cloudflare Pages 后台创建的项目名称
           projectName: 'nextchat-ai' 
-          # NextChat 静态导出目录默认是 out
           directory: './out'
-          # 设置部署到生产环境（即绑定你的主域名）
           branch: 'main'
