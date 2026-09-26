@@ -22,13 +22,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Install Dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Build Static Export
-        run: npm run export
+        run: yarn export
+        env:
+          CODE: ${{ secrets.CODE }}
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
