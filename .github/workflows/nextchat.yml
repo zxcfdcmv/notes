@@ -21,14 +21,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 18 
           cache: 'yarn'
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
       - name: Build Static Export
-        run: yarn export
+        run: npx cross-env NEXT_DISABLE_ESLINT=1 BUILD_MODE=export BUILD_APP=1 yarn mask && npx cross-env NEXT_DISABLE_ESLINT=1 BUILD_MODE=export BUILD_APP=1 next build
         env:
           CODE: ${{ secrets.CODE }}
 
