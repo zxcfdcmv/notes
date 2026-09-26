@@ -47,11 +47,29 @@ jobs:
       - name: Copy Static Files For Cloudflare Pages
         run: |
           mkdir -p out
-          cp -r .next/server/pages/* out/ || true
+          
+          if [ -d ".next/server/app" ]; then
+            cp -r .next/server/app/* out/ || true
+          fi
+          if [ -d ".next/server/pages" ]; then
+            cp -r .next/server/pages/* out/ || true
+          fi
+          
+          if [ -f "out/page.html" ] && [ ! -f "out/index.html" ]; then
+            mv out/page.html out/index.html
+          fi
+
           mkdir -p out/_next
-          cp -r .next/static out/_next/static || true
-          cp -r public/* out/ || true
-          echo "Successfully extracted static assets to out/"
+          if [ -d ".next/static" ]; then
+            cp -r .next/static out/_next/static || true
+          fi
+          
+          if [ -d "public" ]; then
+            cp -r public/* out/ || true
+          fi
+          
+          echo "=== 检查 out 目录结构 ==="
+          ls -R out
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
