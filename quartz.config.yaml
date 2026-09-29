@@ -7,7 +7,8 @@ configuration:
   analytics:
     provider: plausible
   locale: zh-CN
-  baseUrl: zxcfdcmv.github.io/notes
+  # baseUrl: zxcfdcmv.github.io/notes
+  baseUrl: zxcfdcmv-notes.pages.dev
   ignorePatterns:
     - private
     - templates
