@@ -151,3 +151,10 @@ tags:
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260925T032250398Z.png)
 
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260925T033125432Z.png)
+
+## 年均增长率
+
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20261005T083110155Z.png)
+
+> [!success]- 解析
+![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20261005T083128993Z.png)
