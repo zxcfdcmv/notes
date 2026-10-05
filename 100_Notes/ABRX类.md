@@ -153,6 +153,12 @@ tags:
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20260925T033125432Z.png)
 
 ## 年均增长率
+> [!note] 公式
+> ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20261005T100921072Z.png)
+> - **r**：年均增长率（平均每年的增长率）
+> - **nn**：增长的期数（通常指年份差，例如从2010年到2020年，则 n=2020−2010=10n=2020−2010=10）
+> - **现期量**：期末的数值（现在的量）  
+> - **基期量**：期初的数值（开始的量）
 
 ![](https://raw.githubusercontent.com/zxcfdcmv/notes/images/assets/20261005T083110155Z.png)
 
