@@ -29,8 +29,9 @@ title: zxcfdcmv's Notes
 
 | File                                   | 修改时间                          |
 | -------------------------------------- | ----------------------------- |
+| [[OpenStack]]   | 10:05 PM - October 08, 2026   |
+| [[运维]]                 | 10:04 PM - October 08, 2026   |
 | [[MySQL]]           | 11:09 PM - September 22, 2026 |
-| [[运维]]                 | 10:34 AM - September 21, 2026 |
 | [[Redis]]           | 6:21 PM - September 16, 2026  |
 | [[Prometheus]] | 6:21 PM - September 16, 2026  |
 | [[K8S]]               | 6:21 PM - September 16, 2026  |
