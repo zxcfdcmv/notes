@@ -2,6 +2,26 @@
 tags:
     - 运维/OpenStack
 ---
+```text
+用户 / 管理员
+      │
+      ├── Horizon Web 控制台
+      ├── OpenStack CLI
+      └── REST API
+              │
+        Keystone 身份认证
+              │
+ ┌────────────┼────────────┐
+ │            │            │
+Nova        Neutron      Cinder
+计算        网络         块存储
+ │            │            │
+ │            │            └── 存储后端
+ │            └────────────── OVS / OVN / Linux Bridge
+ └── KVM / QEMU / VMware / Hyper-V
+              │
+        计算节点与虚拟机
+```
 ---
 > [!note] 核心
 > 通过独立的组件分别管理计算、存储、网络等底层物理资源，并统一通过 **RESTful API** 进行交互与集成
