@@ -39,4 +39,17 @@ openstack volume list                  # 查看所有的云硬盘（块存储）
 openstack volume show <Volume_ID>      # 查看某块云硬盘属于哪个后端存储集群
 ```
 
-# 常用
+# 排错命令
+```sh
+# 1. 绕过 OpenStack 顶层，直接在计算节点查看底层 KVM 虚拟机状态
+virsh list --all 
+
+# 2. 直接查看某台虚拟机的底层 XML 配置文件（排查硬件分配错误非常有用）
+virsh dumpxml <instance-000xxxxx>
+
+# 3. 检查控制节点的消息队列健康状况（排查平台卡顿、组件不通信）
+rabbitmqctl list_queues | grep -v "0$"   # 过滤出所有有消息积压的队列
+
+# 4. 在计算节点查看 OVS 虚拟交换机状态（排查网络不通、VLAN 标记丢失）
+ovs-vsctl show
+```
