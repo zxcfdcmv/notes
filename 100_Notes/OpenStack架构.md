@@ -77,6 +77,7 @@ Nova        Neutron      Cinder
     - libvirt
     - Neutron Agent 或 OVN 组件
 3. **网络节点 (Network Node)：** 专门负责处理进出云平台的数据流量，运行 Neutron 服务，负责 NAT、路由和 DHCP 等网络流量的分发。
+   
 4. **存储节点 (Storage Node)：** 专用于部署 Cinder 或 Swift 服务的物理服务器，提供磁盘阵列或分布式存储集群。
    可能运行
     - Cinder Volume
@@ -112,3 +113,61 @@ Nova        Neutron      Cinder
     当镜像、网络、磁盘全部到位后，Nova-Compute 会把所有的配置信息组合起来，翻译成底层的 `XML` 配置文件。然后调用本地的虚拟化驱动（通常是 **Libvirt**），由 Libvirt 去通知底层的 **KVM / QEMU** 真正拉起虚拟机进程。
 9. **状态回写：**  
     虚拟机成功开机引导后，Nova-Compute 会向消息队列发送一条状态更新消息，将数据库中该虚拟机的状态由 `Networking/Spawning` 变更为 **`Active`（运行中）**。至此，用户就可以在界面上看到虚拟机已开机。
+
+---
+# 存储架构
+
+## 本地存储
+> 计算节点使用本地磁盘保存虚拟机磁盘
+
+优点：
+- 延迟低
+- 配置简单
+- 成本较低
+
+缺点：
+- 迁移困难
+- 节点故障可能影响虚拟机
+- 扩展能力有限
+
+## Ceph
+> [!note] 
+> Ceph 是 OpenStack 中常见的统一分布式存储后端，可同时提供：
+> - ==RBD：块存储==
+> - ==RGW：对象存储==
+> - ==CephFS：文件存储==
+
+
+# 网络架构
+|网络|作用|
+|---|---|
+|管理网络|服务之间的控制通信|
+|租户网络|虚拟机之间的业务通信|
+|外部网络|浮动 IP 和外网访问|
+|存储网络|访问 Cinder、Ceph、NFS|
+|隧道网络|VXLAN、Geneve 等封装流量|
+
+
+---
+# 与KVM的关系
+```text
+OpenStack
+  ├── Keystone：认证
+  ├── Nova：管理虚拟机
+  ├── Neutron：管理网络
+  ├── Cinder：管理云硬盘
+  ├── Glance：管理镜像
+  └── 调用 libvirt
+
+libvirt
+  └── 调用 QEMU/KVM
+
+KVM
+  └── 在物理服务器上运行虚拟机
+```
+
+- KVM 是虚拟化技术
+- QEMU 是虚拟硬件和设备模拟器
+- libvirt 是虚拟机管理接口
+- OpenStack 是面向多租户和大规模资源池的云管理平台
+
