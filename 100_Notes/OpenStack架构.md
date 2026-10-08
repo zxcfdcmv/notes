@@ -57,11 +57,33 @@ Nova        Neutron      Cinder
 |**数据库**|**状态存储**|MySQL / MariaDB|用于保存云平台的所有配置信息和运行状态（如虚拟机列表、网络拓扑等）。|
 
 ---
-# 物理节点
+# 节点类型
 1. **控制节点 (Control Node)：** 运行所有核心管理服务的 API、消息队列（RabbitMQ）和数据库（MySQL），是平台的控制中枢。
+   服务：
+    - Keystone
+    - Glance API
+    - Nova API
+    - Nova Scheduler
+    - Neutron Server
+    - Horizon
+    - Placement
+    - 数据库
+    - 消息队列
+    - Memcached
 2. **计算节点 (Compute Node)：** 真正承载虚拟机运行的物理服务器，主要运行 `nova-compute` 服务及底层的虚拟化软件。
+   服务：
+    - `nova-compute`
+    - KVM/QEMU
+    - libvirt
+    - Neutron Agent 或 OVN 组件
 3. **网络节点 (Network Node)：** 专门负责处理进出云平台的数据流量，运行 Neutron 服务，负责 NAT、路由和 DHCP 等网络流量的分发。
 4. **存储节点 (Storage Node)：** 专用于部署 Cinder 或 Swift 服务的物理服务器，提供磁盘阵列或分布式存储集群。
+   可能运行
+    - Cinder Volume
+    - Swift 存储服务
+    - Ceph OSD
+    - NFS
+    - iSCSI
 
 ---
 # 工作流程
