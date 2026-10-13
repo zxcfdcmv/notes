@@ -1,0 +1,65 @@
+name: Auto Deploy Cloudflare-Nav to Workers
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # 每周一自动拉取原作者最新代码更新
+  workflow_dispatch:   # 支持手动点击按钮触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 直接拉取原作者的仓库（免去你自己 Fork 的麻烦）
+      - name: Checkout Cloudflare-Nav Repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'wangwangit/nav'
+
+      # 2. 安装 Node.js 运行环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # 建议用稳定的 v20
+          cache: 'npm'
+
+      # 3. 安装依赖
+      - name: Install Dependencies
+        run: npm install
+
+      # 4. 在云端动态创建你专属的 wrangler.toml 配置文件
+      - name: Generate Wrangler Config
+        run: |
+          cat <<EOF > wrangler.toml
+          name = "nav"
+          account_id = "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
+          main = "src/index.ts"
+          compatibility_date = "2024-01-01"
+
+          [[d1_databases]]
+          binding = "NAV_DB"
+          database_name = "nav-db"
+          database_id = "${{ secrets.NAV_D1_ID }}"
+
+          [[kv_namespaces]]
+          binding = "NAV_AUTH"
+          id = "${{ secrets.NAV_KV_ID }}"
+          EOF
+
+      # 5. 自动化给你的 Cloudflare D1 数据库建表（如果表已存在会安全跳过）
+      - name: Initialize D1 Database Structure
+        run: |
+          if [ -f "./schema.sql" ]; then
+            npx wrangler d1 execute nav-db --remote --file=./schema.sql --yes
+          else
+            echo "schema.sql not found, skipping DB init."
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # 6. 发布到 Cloudflare Workers (注意这里是标准的 worker 部署，不需要 pages 命令)
+      - name: Publish to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
