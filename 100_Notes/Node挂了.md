@@ -5,7 +5,7 @@ tags:
 ---
 
 > [!note] 本质
-> **Kubelet 守护进程无法正常工作**，或者 **Master 节点（kube-controller-manager）在规定时间内（默认 40s）没有收到该节点的心跳上报**
+> **kube-controller-manager 在规定时间内（`node-monitor-grace-period`，默认值因版本而异，常见为 40 秒或 50 秒）没有通过 kube-apiserver 收到该节点 kubelet 的有效心跳或状态更新。** 这背后可能是 kubelet 进程异常、节点失联或网络问题
 ---
 # 原因
 ## 资源耗尽与系统保护
